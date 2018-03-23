@@ -1486,6 +1486,57 @@ static __init void init_slack_timer(struct exynos_cpufreq_domain *domain,
 	}
 }
 
+static unsigned long arg_cpu_max_c1 = 2106000;
+
+static int __init cpufreq_read_cpu_max_c1(char *cpu_max_c1)
+{
+	unsigned long ui_khz;
+	int ret;
+
+	ret = kstrtoul(cpu_max_c1, 0, &ui_khz);
+	if (ret)
+		return -EINVAL;
+
+	arg_cpu_max_c1 = ui_khz;
+	printk("cpu_max_c1=%lu\n", arg_cpu_max_c1);
+	return ret;
+}
+__setup("cpu_max_c1=", cpufreq_read_cpu_max_c1);
+
+unsigned long arg_cpu_max_c2 = 2600000;
+
+static __init int cpufreq_read_cpu_max_c2(char *cpu_max_c2)
+{
+	unsigned long ui_khz;
+	int ret;
+
+	ret = kstrtoul(cpu_max_c2, 0, &ui_khz);
+	if (ret)
+		return -EINVAL;
+
+	arg_cpu_max_c2 = ui_khz;
+	printk("cpu_max_c2=%lu\n", arg_cpu_max_c2);
+	return ret;
+}
+__setup("cpu_max_c2=", cpufreq_read_cpu_max_c2);
+
+unsigned long arg_cpu_max_c3 = 3016000;
+
+static __init int cpufreq_read_cpu_max_c3(char *cpu_max_c3)
+{
+	unsigned long ui_khz;
+	int ret;
+
+	ret = kstrtoul(cpu_max_c3, 0, &ui_khz);
+	if (ret)
+		return -EINVAL;
+
+	arg_cpu_max_c3 = ui_khz;
+	printk("cpu_max_c2=%lu\n", arg_cpu_max_c3);
+	return ret;
+}
+__setup("cpu_max_c3=", cpufreq_read_cpu_max_c3);
+
 static __init int init_domain(struct exynos_cpufreq_domain *domain,
 					struct device_node *dn)
 {
@@ -1524,6 +1575,17 @@ static __init int init_domain(struct exynos_cpufreq_domain *domain,
 	/* Default QoS for user */
 	if (!of_property_read_u32(dn, "user-default-qos", &val))
 		domain->user_default_qos = val;
+
+	if (domain->id == 0) {
+		domain->max_usable_freq = arg_cpu_max_c1;
+		domain->max_freq = arg_cpu_max_c1;
+	} else if (domain->id == 1) {
+		domain->max_usable_freq = arg_cpu_max_c2;
+		domain->max_freq = arg_cpu_max_c2;
+	} else if (domain->id == 2) {
+		domain->max_usable_freq = arg_cpu_max_c3;
+		domain->max_freq = arg_cpu_max_c3;
+	}
 
 	domain->boot_freq = cal_dfs_get_boot_freq(domain->cal_id);
 	domain->resume_freq = cal_dfs_get_resume_freq(domain->cal_id);
