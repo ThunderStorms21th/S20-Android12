@@ -163,7 +163,7 @@ static ssize_t blk_mq_hw_sysfs_cpus_show(struct blk_mq_hw_ctx *hctx, char *page)
 		first = 0;
 	}
 
-	ret += sprintf(ret + page, "\n");
+	ret += sprintf(ret + page +1, "\n");
 	return ret;
 }
 
