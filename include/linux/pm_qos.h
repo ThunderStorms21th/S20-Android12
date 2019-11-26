@@ -95,6 +95,8 @@ enum pm_qos_flags_status {
 #define PM_QOS_RESUME_LATENCY_NO_CONSTRAINT	PM_QOS_LATENCY_ANY
 #define PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS	PM_QOS_LATENCY_ANY_NS
 #define PM_QOS_LATENCY_TOLERANCE_DEFAULT_VALUE	0
+#define PM_QOS_MIN_FREQUENCY_DEFAULT_VALUE	0
+#define PM_QOS_MAX_FREQUENCY_DEFAULT_VALUE	FREQ_QOS_MAX_DEFAULT_VALUE
 #define PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT	(-1)
 #define PM_QOS_CLUSTER0_FREQ_MIN_DEFAULT_VALUE	0
 #define PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE	INT_MAX
@@ -131,6 +133,8 @@ struct pm_qos_flags_request {
 enum dev_pm_qos_req_type {
 	DEV_PM_QOS_RESUME_LATENCY = 1,
 	DEV_PM_QOS_LATENCY_TOLERANCE,
+	DEV_PM_QOS_MIN_FREQUENCY,
+	DEV_PM_QOS_MAX_FREQUENCY,
 	DEV_PM_QOS_FLAGS,
 };
 
@@ -173,6 +177,7 @@ struct pm_qos_flags {
 struct dev_pm_qos {
 	struct pm_qos_constraints resume_latency;
 	struct pm_qos_constraints latency_tolerance;
+	struct freq_constraints freq;
 	struct pm_qos_flags flags;
 	struct dev_pm_qos_request *resume_latency_req;
 	struct dev_pm_qos_request *latency_tolerance_req;
@@ -267,6 +272,21 @@ static inline s32 __dev_pm_qos_read_value(struct device *dev)
 			{ return PM_QOS_RESUME_LATENCY_NO_CONSTRAINT; }
 static inline s32 dev_pm_qos_read_value(struct device *dev)
 			{ return PM_QOS_RESUME_LATENCY_NO_CONSTRAINT; }
+
+static inline s32 dev_pm_qos_read_value(struct device *dev,
+					enum dev_pm_qos_req_type type)
+{
+	switch (type) {
+	case DEV_PM_QOS_MIN_FREQUENCY:
+		return PM_QOS_MIN_FREQUENCY_DEFAULT_VALUE;
+	case DEV_PM_QOS_MAX_FREQUENCY:
+		return PM_QOS_MAX_FREQUENCY_DEFAULT_VALUE;
+	default:
+		WARN_ON(1);
+		return 0;
+	}
+}
+
 static inline int dev_pm_qos_add_request(struct device *dev,
 					 struct dev_pm_qos_request *req,
 					 enum dev_pm_qos_req_type type,
@@ -324,7 +344,7 @@ static inline s32 dev_pm_qos_raw_read_value(struct device *dev)
 #endif
 
 #define FREQ_QOS_MIN_DEFAULT_VALUE	0
-#define FREQ_QOS_MAX_DEFAULT_VALUE	(-1)
+#define FREQ_QOS_MAX_DEFAULT_VALUE	S32_MAX
 
 enum freq_qos_req_type {
 	FREQ_QOS_MIN = 1,
@@ -359,6 +379,8 @@ int freq_qos_add_request(struct freq_constraints *qos,
 			 enum freq_qos_req_type type, s32 value);
 int freq_qos_update_request(struct freq_qos_request *req, s32 new_value);
 int freq_qos_remove_request(struct freq_qos_request *req);
+int freq_qos_apply(struct freq_qos_request *req,
+		   enum pm_qos_req_action action, s32 value);
 
 int freq_qos_add_notifier(struct freq_constraints *qos,
 			  enum freq_qos_req_type type,
