@@ -2384,7 +2384,7 @@ static int ufshcd_init_clk_gating(struct ufs_hba *hba)
 	snprintf(wq_name, ARRAY_SIZE(wq_name), "ufs_clk_gating_%d",
 		 hba->host->host_no);
 	hba->clk_gating.clk_gating_workq = alloc_ordered_workqueue("%s",
-										WQ_MEM_RECLAIM, wq_name);
+										WQ_MEM_RECLAIM | WQ_HIGHPRI, wq_name);
 
 	if (!hba->clk_gating.clk_gating_workq) {
 		ret = -ENOMEM;
