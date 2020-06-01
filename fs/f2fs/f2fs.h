@@ -575,8 +575,15 @@ enum {
 
 #define DEFAULT_RETRY_IO_COUNT	8	/* maximum retry read IO count */
 
-/* congestion wait timeout value, default: 10ms */
-#define	DEFAULT_IO_TIMEOUT	(msecs_to_jiffies(10))
+/*
+The new times are as follows:
+  100 Hz  => 1 jiffy   (effective: 10 ms)
+  250 Hz  => 2 jiffies (effective: 8 ms)
+  300 Hz  => 2 jiffies (effective: 6 ms)
+  1000 Hz => 6 jiffies (effective: 6 ms)
+*/
+/* congestion wait timeout value, default: 8ms */
+#define	DEFAULT_IO_TIMEOUT	(msecs_to_jiffies(8))
 
 /* maximum retry quota flush count */
 #define DEFAULT_RETRY_QUOTA_FLUSH_COUNT		8
