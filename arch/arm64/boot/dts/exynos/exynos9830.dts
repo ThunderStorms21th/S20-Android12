@@ -14476,8 +14476,8 @@
 			sibling-cpus = "0-3";
 			cal-id = <0xb040002>;
 			dm-type = <0x00>;
-			max-freq = <0x1e8c50>;
-			min-freq = <0x6be90>;
+			max-freq = <0x202290>;  // <0x1e8c50>
+			min-freq = <0x2c6f0>;   // <0x6be90>
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
 			user-default-qos = <0xc4c70>;
@@ -14505,8 +14505,8 @@
 			sibling-cpus = "4-5";
 			cal-id = <0xb040003>;
 			dm-type = <0x01>;
-			max-freq = <0x27ac40>;
-			min-freq = <0x7bc78>;
+			max-freq = <0x29a810>;  // <0x27ac40>
+			min-freq = <0x5c0a8>;   // <0x7bc78>
 			pm_qos-min-class = <0x05>;
 			pm_qos-max-class = <0x06>;
 			user-default-qos = <0xce4c8>;
@@ -14543,8 +14543,8 @@
 			cal-id = <0xb040004>;
 			dm-type = <0x02>;
 			need-awake;
-			max-freq = <0x29a810>;
-			min-freq = <0x854d0>;
+			max-freq = <0x2e0540>;  // <0x29a810>
+			min-freq = <0x854d0>;   // <0x854d0>
 			pm_qos-min-class = <0x07>;
 			pm_qos-max-class = <0x08>;
 			pm_qos-booting = <0x1e8c50>;
@@ -15871,7 +15871,7 @@
 		tmu_name = "BIG";
 		id = <0x00>;
 		sensors = <0x3e>;
-		sensing_mode = "balance";
+		sensing_mode = "max";   // <balance> min max
 		hotplug_enable = <0x01>;
 		hotplug_in_threshold = <0x5b>;
 		hotplug_out_threshold = <0x60>;
@@ -15886,7 +15886,7 @@
 		tmu_name = "MID";
 		id = <0x01>;
 		sensors = <0x80>;
-		sensing_mode = "max";
+		sensing_mode = "max";   // balance min <max>
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x174>;
 	};
@@ -15898,7 +15898,7 @@
 		tmu_name = "LITTLE";
 		id = <0x02>;
 		sensors = <0x100>;
-		sensing_mode = "max";
+		sensing_mode = "max";   // balance min <max>
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x176>;
 	};
@@ -15910,7 +15910,7 @@
 		tmu_name = "G3D";
 		id = <0x03>;
 		sensors = <0x3d>;
-		sensing_mode = "balance";
+		sensing_mode = "max";   // <balance> min max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x17f>;
 	};
@@ -15956,7 +15956,7 @@
 			polling-delay = <0x3e8>;
 			thermal-sensors = <0x172>;
 			governor = "power_allocator";
-			sustainable-power = <0x00>;
+			sustainable-power = <0x01>; // <0x00>
 			k_po = <0x00>;
 			k_pu = <0x00>;
 			k_i = <0x00>;
