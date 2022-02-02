@@ -967,10 +967,8 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 		irq_exit();
 		break;
 #endif
-
 	case IPI_WAKEUP:
 		break;
-#endif
 #if defined(CONFIG_EXYNOS_EHLD) && defined(CONFIG_EXYNOS_ADV_TRACER_EHLD)
 	case IPI_EHLD_KICK:
 		exynos_ehld_do_ipi(cpu, IPI_EHLD_KICK);
