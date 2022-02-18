@@ -27,6 +27,7 @@
 #include <linux/slab.h>
 #include <linux/cpu.h>
 #include <linux/gpu_cooling.h>
+#include <linux/throttle_limit.h>
 #include <soc/samsung/tmu.h>
 #include <trace/events/thermal.h>
 
@@ -463,6 +464,10 @@ static int gpufreq_apply_cooling(struct gpufreq_cooling_device *gpufreq_cdev,
 	gpufreq_cdev->gpufreq_state = cooling_state;
 
 	gpu_cooling_freq = gpufreq_cooling_get_freq(0, gpufreq_cdev->gpufreq_state);
+
+	if (gpu_cooling_freq < get_gpu_throttle_limit())
+			gpu_cooling_freq = get_gpu_throttle_limit();
+
 	if (gpu_cooling_freq == THERMAL_CFREQ_INVALID) {
 		pr_warn("Failed to convert %lu gpu_level\n",
 				     gpufreq_cdev->gpufreq_state);

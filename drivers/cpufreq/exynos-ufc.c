@@ -21,6 +21,7 @@
 #include <linux/cpumask.h>
 #include <linux/cpufreq.h>
 #include <linux/pm_opp.h>
+#include <linux/throttle_limit.h>
 #include <linux/ems.h>
 #include <linux/exynos-ucc.h>
 
@@ -28,6 +29,13 @@
 
 #include "exynos-acme.h"
 #include "exynos-ufc.h"
+
+static unsigned int gpu_throttle_limit = 0;
+
+int get_gpu_throttle_limit(void)
+{
+	return gpu_throttle_limit;
+}
 
 char *stune_group_name2[] = {
 	"min-limit",
@@ -700,6 +708,8 @@ static struct kobj_attribute execution_mode_change =
 		ufc_show_execution_mode_change, ufc_store_execution_mode_change);
 static struct kobj_attribute cstate_control =
 	__ATTR(cstate_control, 0644, show_cstate_control, store_cstate_control);
+static struct kobj_attribute throttle_limit =
+	__ATTR(cstate_control, 0644, show_throttle_limit, store_throttle_limit);
 
 /*********************************************************************
  *                          INIT FUNCTION                          *
@@ -800,6 +810,25 @@ static __init int ufc_init_pm_qos(void)
 	return 0;
 }
 
+static ssize_t show_throttle_limit(struct kobject *kobj,
+				struct kobj_attribute *attr, char *buf)
+{
+	return snprintf(buf, 8, "%u", gpu_throttle_limit);
+}
+
+static ssize_t store_throttle_limit(struct kobject *kobj, struct kobj_attribute *attr,
+					const char *buf, size_t count)
+{
+	unsigned int gpu_throttlee;
+
+	if (sscanf(buf, "%u", &gpu_throttle) != 1)
+		return -EINVAL;
+
+	gpu_throttle_limit = gpu_throttle;
+
+	return count;
+}
+
 static __init int ufc_init_sysfs(void)
 {
 	int ret = 0;
@@ -825,6 +854,10 @@ static __init int ufc_init_sysfs(void)
 		return ret;
 
 	ret = sysfs_create_file(power_kobj, &cstate_control.attr);
+	if (ret)
+		return ret;
+
+	ret = sysfs_create_file(power_kobj, &throttle_limit.attr);
 	if (ret)
 		return ret;
 

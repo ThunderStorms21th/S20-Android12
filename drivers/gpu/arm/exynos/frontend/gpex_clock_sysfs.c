@@ -26,6 +26,8 @@
 
 #include "gpex_clock_internal.h"
 
+#include <linux/throttle_limit.h>
+
 static struct _clock_info *clk_info;
 
 /*************************************
@@ -156,8 +158,8 @@ GPEX_STATIC ssize_t set_max_lock_dvfs(const char *buf, size_t count)
 			return -ENOENT;
 		}
 		
-		if (clock < SUSTAINABLE_FREQ)
-			clock = SUSTAINABLE_FREQ;
+		if (clock < get_gpu_throttle_limit())
+			clock = get_gpu_throttle_limit();
 
 		clk_info->user_max_lock_input = clock;
 
