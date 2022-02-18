@@ -14478,7 +14478,7 @@
 			cal-id = <0xb040002>;
 			dm-type = <0x00>;
 			max-freq = <0x202290>;  // <0x1e8c50>
-			min-freq = <0x2c6f0>;   // <0x6be90>
+			min-freq = <0x6be90>;   // <0x6be90>
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
 			user-default-qos = <0xc4c70>;
