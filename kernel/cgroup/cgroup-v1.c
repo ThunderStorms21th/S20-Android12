@@ -16,6 +16,9 @@
 
 #include <trace/events/cgroup.h>
 
+/* Gaming control */
+#include <linux/gaming_control.h>
+
 /*
  * pidlists linger the following amount before being destroyed.  The goal
  * is avoiding frequent destruction in the middle of consecutive read calls
@@ -549,6 +552,13 @@ static ssize_t __cgroup1_procs_write(struct kernfs_open_file *of,
 		goto out_finish;
 
 	ret = cgroup_attach_task(cgrp, task, threadgroup);
+
+	/* Check if the task is a game */
+	if (!memcmp(cgrp->kn->name, "top-app", sizeof("top-app")) && !ret) {
+		game_option(tsk, GAME_RUNNING);
+	} else if (!memcmp(cgrp->kn->name, "background", sizeof("background")) && !ret) {
+		game_option(tsk, GAME_PAUSE);
+	}
 
 out_finish:
 	cgroup_procs_write_finish(task);

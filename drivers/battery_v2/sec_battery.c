@@ -20,6 +20,8 @@
 #include <linux/sti/abc_common.h>
 #endif
 
+#include <linux/gaming_control.h>
+
 #if defined(CONFIG_KUNIT)
 #define __visible_for_testing
 #else
@@ -4692,6 +4694,9 @@ static void sec_bat_check_full_capacity(struct sec_battery_info *battery)
 {
 	int rechg_capacity = battery->batt_full_capacity - 2;
 
+	if(battery_idle_gaming())
+		goto out;
+
 	if (battery->batt_full_capacity >= 100 || battery->batt_full_capacity <= 0 ||
 		battery->status == POWER_SUPPLY_STATUS_DISCHARGING) {
 		if (battery->misc_event & BATT_MISC_EVENT_FULL_CAPACITY) {
@@ -4702,12 +4707,13 @@ static void sec_bat_check_full_capacity(struct sec_battery_info *battery)
 		return;
 	}
 
-	if (battery->misc_event & BATT_MISC_EVENT_FULL_CAPACITY) {
+out:
+	if (battery->misc_event & BATT_MISC_EVENT_FULL_CAPACITY && !battery_idle_gaming()) {
 		if (battery->capacity <= rechg_capacity) {
 			pr_info("%s : start re-charging(%d, %d)\n", __func__, battery->capacity, rechg_capacity);
 			sec_bat_recov_full_capacity(battery);
 		}
-	} else if (battery->capacity >= battery->batt_full_capacity) {
+	} else if (battery->capacity >= battery->batt_full_capacity || battery_idle_gaming()) {
 		pr_info("%s : stop charging(%d, %d)\n", __func__, battery->capacity, battery->batt_full_capacity);
 
 		sec_bat_set_misc_event(battery, BATT_MISC_EVENT_FULL_CAPACITY,
