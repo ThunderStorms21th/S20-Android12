@@ -692,6 +692,25 @@ out:
 	return count;
 }
 
+static ssize_t show_throttle_limit(struct kobject *kobj,
+				struct kobj_attribute *attr, char *buf)
+{
+	return snprintf(buf, 8, "%u", gpu_throttle_limit);
+}
+
+static ssize_t store_throttle_limit(struct kobject *kobj, struct kobj_attribute *attr,
+					const char *buf, size_t count)
+{
+	unsigned int gpu_throttle;
+
+	if (sscanf(buf, "%u", &gpu_throttle) != 1)
+		return -EINVAL;
+
+	gpu_throttle_limit = gpu_throttle;
+
+	return count;
+}
+
 static struct kobj_attribute cpufreq_table =
 	__ATTR(cpufreq_table, 0444, ufc_show_cpufreq_table, NULL);
 static struct kobj_attribute cpufreq_min_limit =
@@ -808,25 +827,6 @@ static __init int ufc_init_pm_qos(void)
 
 	/* Success */
 	return 0;
-}
-
-static ssize_t show_throttle_limit(struct kobject *kobj,
-				struct kobj_attribute *attr, char *buf)
-{
-	return snprintf(buf, 8, "%u", gpu_throttle_limit);
-}
-
-static ssize_t store_throttle_limit(struct kobject *kobj, struct kobj_attribute *attr,
-					const char *buf, size_t count)
-{
-	unsigned int gpu_throttlee;
-
-	if (sscanf(buf, "%u", &gpu_throttle) != 1)
-		return -EINVAL;
-
-	gpu_throttle_limit = gpu_throttle;
-
-	return count;
 }
 
 static __init int ufc_init_sysfs(void)

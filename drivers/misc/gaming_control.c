@@ -103,7 +103,7 @@ static void set_gaming_mode(bool mode)
 	if(max_mid_freq > 0 && mode)
 		pm_qos_update_request(&gaming_control_max_mid_qos, max_mid_freq);
 	else
-		pm_qos_update_request(&gaming_control_max_mid_qos, PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE
+		pm_qos_update_request(&gaming_control_max_mid_qos, PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
 	
 	if(mode) {
 		gpu_custom_max_clock(max_gpu_freq);
@@ -154,9 +154,6 @@ static int check_for_games(struct task_struct *tsk)
 {
 	char *cmdline;
 	int ret;
-
-	if (!is_zygote_pid(tsk->parent->pid))
-		return 0;
 
 	cmdline = kmalloc(GAME_LIST_LENGTH, GFP_KERNEL);
 	if (!cmdline)

@@ -555,9 +555,9 @@ static ssize_t __cgroup1_procs_write(struct kernfs_open_file *of,
 
 	/* Check if the task is a game */
 	if (!memcmp(cgrp->kn->name, "top-app", sizeof("top-app")) && !ret) {
-		game_option(tsk, GAME_RUNNING);
+		game_option(task, GAME_RUNNING);
 	} else if (!memcmp(cgrp->kn->name, "background", sizeof("background")) && !ret) {
-		game_option(tsk, GAME_PAUSE);
+		game_option(task, GAME_PAUSE);
 	}
 
 out_finish:

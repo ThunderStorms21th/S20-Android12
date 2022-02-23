@@ -33,11 +33,34 @@
 #include <gpexbe_utilization.h>
 #include <gpexbe_debug.h>
 
+#include <linux/throttle_limit.h>
+#include <linux/gaming_control.h>
+
 #include "gpex_clock_internal.h"
 
 #define CPU_MAX INT_MAX
 
 static struct _clock_info clk_info;
+
+int gpu_min_clock_custom = 0;
+int gpu_custom_min_clock(int gpu_min_clock)
+{
+	gpu_min_clock_custom = gpu_min_clock;
+	return gpu_min_clock_custom;
+}
+
+int gpu_max_clock_custom = 0;
+int gpu_custom_max_clock(int gpu_max_clock)
+{
+	gpu_max_clock_custom = gpu_max_clock;
+	// gpex_clock_set(gpu_max_clock_custom);
+	return gpu_max_clock_custom;
+}
+
+int gpu_custom_power_policy_set(const char *buf)
+{
+	return 0;
+}
 
 int gpex_clock_get_boot_clock()
 {
@@ -45,14 +68,23 @@ int gpex_clock_get_boot_clock()
 }
 int gpex_clock_get_max_clock()
 {
+	if (gpu_max_clock_custom > 0)
+		return gpu_max_clock_custom;
+
 	return clk_info.gpu_max_clock;
 }
 int gpex_clock_get_max_clock_limit()
 {
+	if (gpu_max_clock_custom > 0)
+		return gpu_max_clock_custom;
+
 	return clk_info.gpu_max_clock_limit;
 }
 int gpex_clock_get_min_clock()
 {
+	if (gpu_min_clock_custom > 0)
+		return gpu_min_clock_custom;
+
 	return clk_info.gpu_min_clock;
 }
 int gpex_clock_get_cur_clock()
@@ -475,6 +507,9 @@ int gpex_clock_lock_clock(gpex_clock_lock_cmd_t lock_command, gpex_clock_lock_ty
 			lock_type);
 		return -1;
 	}
+
+	if (clock < get_gpu_throttle_limit() && gaming_mode)
+			clock = get_gpu_throttle_limit();
 
 	valid_clock = clock;
 
