@@ -30,7 +30,12 @@
 #define GAME_NORMAL_CL2_MAX	2500000             // 1690000
 #define GAME_NORMAL_CL1_MAX	2600000             // 2314000
 #define GAME_NORMAL_CL1_MAX_SSE	2600000         // 2314000
-#define GAME_LITE_GPU	702000                  // 260000
+#define GAME_NORMAL_CL2_MIN	1482000
+#define GAME_NORMAL_CL1_MIN	1404000
+#define GAME_NORMAL_CL0_MIN	1456000 
+#define GAME_LITE_GPU	572000                  // 260000
+#define GAME_MAX_GPU	800000
+#define GAME_MIN_GPU	455000
 #define GAME_NORMAL_CL0_MAX	2002000             // 2002000
 #define GAME_NORMAL_MIF_MAX	2730000             // 2730000
 #define GAME_NORMAL_MIF_MIN	1716000             // 421000
@@ -56,7 +61,12 @@ static uint maxlock_delay_sec = 10;                             // 10
 static int cl2_max = GAME_NORMAL_CL2_MAX;
 static int cl1_max = GAME_NORMAL_CL1_MAX;
 static int cl0_max = GAME_NORMAL_CL0_MAX;                       // PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE
+static int cl2_min = GAME_NORMAL_CL2_MIN;
+static int cl1_min = GAME_NORMAL_CL1_MIN;
+static int cl0_min = GAME_NORMAL_CL0_MIN; 
 static int gpu_lite = GAME_LITE_GPU;
+static int gpu_max = GAME_MAX_GPU;
+static int gpu_min = GAME_MIN_GPU;
 static int mif_max = GAME_NORMAL_MIF_MAX;                       // PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE
 static int mif_min = GAME_NORMAL_MIF_MIN;                       // PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE
 static int ta_sse_ur_thd = 50;                                  // 50
@@ -67,8 +77,13 @@ static int prev_is_game = 0;
 static struct pm_qos_request pm_qos_cl2_max;
 static struct pm_qos_request pm_qos_cl1_max;
 static struct pm_qos_request pm_qos_cl0_max;
+static struct pm_qos_request pm_qos_cl2_min;
+static struct pm_qos_request pm_qos_cl1_min;
+static struct pm_qos_request pm_qos_cl0_min;
 static struct pm_qos_request pm_qos_mif_max;
 static struct pm_qos_request pm_qos_mif_min;
+static struct pm_qos_request pm_qos_gpu_max;
+static struct pm_qos_request pm_qos_gpu_min;
 
 enum {
 	NORMAL_MODE,
@@ -112,8 +127,13 @@ static int gmc_thread(void *data)
 	pm_qos_add_request(&pm_qos_cl2_max, PM_QOS_CLUSTER2_FREQ_MAX, PM_QOS_CLUSTER2_FREQ_MAX_DEFAULT_VALUE);
 	pm_qos_add_request(&pm_qos_cl1_max, PM_QOS_CLUSTER1_FREQ_MAX, PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
 	pm_qos_add_request(&pm_qos_cl0_max, PM_QOS_CLUSTER0_FREQ_MAX, PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE);
+	pm_qos_add_request(&pm_qos_cl2_min, PM_QOS_CLUSTER2_FREQ_MIN, PM_QOS_CLUSTER2_FREQ_MIN_DEFAULT_VALUE);
+	pm_qos_add_request(&pm_qos_cl1_min, PM_QOS_CLUSTER1_FREQ_MIN, PM_QOS_CLUSTER1_FREQ_MIN_DEFAULT_VALUE);
+	pm_qos_add_request(&pm_qos_cl0_min, PM_QOS_CLUSTER0_FREQ_MIN, PM_QOS_CLUSTER0_FREQ_MIN_DEFAULT_VALUE);
 	pm_qos_add_request(&pm_qos_mif_max, PM_QOS_BUS_THROUGHPUT_MAX, PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE);
 	pm_qos_add_request(&pm_qos_mif_min, PM_QOS_BUS_THROUGHPUT, PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE);
+	pm_qos_add_request(&pm_qos_gpu_max, PM_QOS_GPU_THROUGHPUT_MAX, PM_QOS_GPU_FREQ_MAX_DEFAULT_VALUE);
+	pm_qos_add_request(&pm_qos_gpu_min, PM_QOS_GPU_THROUGHPUT_MIN, PM_QOS_GPU_FREQ_MIN_DEFAULT_VALUE);				
 	emstune_add_request(&emstune_req_gmc);
 
 	while (is_running) {
@@ -190,14 +210,24 @@ static int gmc_thread(void *data)
 				pm_qos_update_request(&pm_qos_cl1_max, PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
 				//pm_qos_update_request(&pm_qos_cl1_max, 1898000);
 				pm_qos_update_request(&pm_qos_cl0_max, PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl2_min, PM_QOS_CLUSTER2_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl1_min, PM_QOS_CLUSTER1_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl0_min, PM_QOS_CLUSTER0_FREQ_MIN_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_mif_max, PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_mif_min, PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_gpu_min, PM_QOS_GPU_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_gpu_min, PM_QOS_GPU_FREQ_MAX_DEFAULT_VALUE);
 			} else {
 				pm_qos_update_request(&pm_qos_cl2_max, PM_QOS_CLUSTER2_FREQ_MAX_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_cl1_max, PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_cl0_max, PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl2_min, PM_QOS_CLUSTER2_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl1_min, PM_QOS_CLUSTER1_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_cl0_min, PM_QOS_CLUSTER0_FREQ_MIN_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_mif_max, PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE);
 				pm_qos_update_request(&pm_qos_mif_min, PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_gpu_min, PM_QOS_GPU_FREQ_MIN_DEFAULT_VALUE);
+				pm_qos_update_request(&pm_qos_gpu_min, PM_QOS_GPU_FREQ_MAX_DEFAULT_VALUE);
 			}
 
 #if 0
@@ -306,12 +336,17 @@ DEF_NODE(is_game)
 DEF_NODE(polling_ms)
 DEF_NODE(bind_cpu)
 DEF_NODE(cl2_max)
+DEF_NODE(cl2_min)
 DEF_NODE(cl1_max)
+DEF_NODE(cl1_min)
 DEF_NODE(cl1_max_sse)
 DEF_NODE(cl0_max)
+DEF_NODE(cl0_min)
 DEF_NODE(mif_max)
 DEF_NODE(mif_min)
+DEF_NODE(gpu_max)
 DEF_NODE(gpu_lite)
+DEF_NODE(gpu_min)
 DEF_NODE(maxlock_delay_sec)
 DEF_NODE(ta_sse_ur_thd)
 
@@ -345,12 +380,17 @@ static struct attribute *gmc_attrs[] = {
 	&bind_cpu_attr.attr,
 	&is_game_attr.attr,
 	&cl2_max_attr.attr,
+	&cl2_min_attr.attr,
 	&cl1_max_attr.attr,
+	&cl1_min_attr.attr,
 	&cl1_max_sse_attr.attr,
 	&cl0_max_attr.attr,
+	&cl0_min_attr.attr,
 	&mif_max_attr.attr,
 	&mif_min_attr.attr,
+	&gpu_max_attr.attr,
 	&gpu_lite_attr.attr,
+	&gpu_min_attr.attr,
 	&maxlock_delay_sec_attr.attr,
 	&ta_sse_ur_thd_attr.attr,
 	NULL
