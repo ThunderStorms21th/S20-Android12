@@ -27,10 +27,14 @@
 #include <linux/cpumask.h>
 #include <linux/kernel.h>
 
-#define GAME_NORMAL_CL2_MAX	1690000
-#define GAME_NORMAL_CL1_MAX	2314000
-#define GAME_NORMAL_CL1_MAX_SSE	2314000
-#define GAME_LITE_GPU	260000
+#define GAME_NORMAL_CL2_MAX	2500000             // 1690000
+#define GAME_NORMAL_CL1_MAX	2600000             // 2314000
+#define GAME_NORMAL_CL1_MAX_SSE	2600000         // 2314000
+#define GAME_LITE_GPU	702000                  // 260000
+#define GAME_NORMAL_CL0_MAX	2002000             // 2002000
+#define GAME_NORMAL_MIF_MAX	2730000             // 2730000
+#define GAME_NORMAL_MIF_MIN	1716000             // 421000
+
 
 static struct emstune_mode_request emstune_req_gmc;
 
@@ -45,17 +49,17 @@ static uint devfreq_mif = 0;
 
 static int is_running = 0;
 static int run = 0;
-static uint polling_ms = 1000;
+static uint polling_ms = 1000;                                  // 1000
 static uint bind_cpu = 0;
 static uint is_game = 0;
-static uint maxlock_delay_sec = 10;
+static uint maxlock_delay_sec = 10;                             // 10
 static int cl2_max = GAME_NORMAL_CL2_MAX;
 static int cl1_max = GAME_NORMAL_CL1_MAX;
-static int cl0_max = PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE;
+static int cl0_max = GAME_NORMAL_CL0_MAX;                       // PM_QOS_CLUSTER0_FREQ_MAX_DEFAULT_VALUE
 static int gpu_lite = GAME_LITE_GPU;
-static int mif_max = PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE;
-static int mif_min = PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE;
-static int ta_sse_ur_thd = 50;
+static int mif_max = GAME_NORMAL_MIF_MAX;                       // PM_QOS_BUS_THROUGHPUT_MAX_DEFAULT_VALUE
+static int mif_min = GAME_NORMAL_MIF_MIN;                       // PM_QOS_BUS_THROUGHPUT_DEFAULT_VALUE
+static int ta_sse_ur_thd = 50;                                  // 50
 static int cl1_max_sse = GAME_NORMAL_CL1_MAX_SSE;
 
 static int prev_is_game = 0;
@@ -76,7 +80,7 @@ enum {
 	GAME_MODE,
 };
 
-#define CL1_MAX_SSE	2314000
+#define CL1_MAX_SSE	2600000     // 2314000
 
 //---------------------------------------
 // thread main
