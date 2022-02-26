@@ -2944,6 +2944,7 @@ context_switch(struct rq *rq, struct task_struct *prev,
 		enter_lazy_tlb(oldmm, next);
 	} else
 		switch_mm_irqs_off(oldmm, mm, next);
+		lru_gen_use_mm(next->mm);
 
 	if (!prev->mm) {
 		prev->active_mm = NULL;
