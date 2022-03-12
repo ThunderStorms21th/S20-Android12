@@ -7554,17 +7554,17 @@
 		gpu_pmqos_cpu_cluster_num = <0x03>;
 		gpu_pmu_status_reg_offset = <0x2204>;
 		gpu_pmu_status_local_pwr_mask = <0x01>;
-		gpu_max_clock = <0xc3500>;
-		gpu_max_clock_limit = <0xc3500>;
+		gpu_max_clock = <0xcb200>;              // 0xc3500
+		gpu_max_clock_limit = <0xcb200>;        // 0xc3500
 		gpu_min_clock = <0x26160>;
 		gpu_dvfs_start_clock = <0x3f7a0>;
 		gpu_dvfs_bl_config_clock = <0x26160>;
-		gpu_default_voltage = <0xc3500>;
+		gpu_default_voltage = <0xcb200>;        // 0xc3500
 		gpu_cold_minimum_vol = <0x00>;
-		gpu_voltage_offset_margin = <0x927c>;
+		gpu_voltage_offset_margin = <0x493e>;   // 0x927c
 		gpu_tmu_control = <0x01>;
 		gpu_temp_throttling_level_num = <0x06>;
-		gpu_temp_throttling = <0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0>;
+		gpu_temp_throttling = <0xcb200 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0>;    // 0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0
 		gpu_power_coeff = <0x271>;
 		gpu_dvfs_time_interval = <0x05>;
 		gpu_default_wakeup_lock = <0x01>;
@@ -7581,12 +7581,12 @@
 		gpu_pmqos_compute_mif_max_clock = <0x26ae58>;
 		gpu_pmqos_mif_max_clock = <0x29a810>;
 		gpu_pmqos_mif_max_clock_base = <0x9eb10>;
-		gpu_pmqos_g3d_clock = <0xc3500 0xab630>;
+		gpu_pmqos_g3d_clock = <0xcb200 0xab630>;        // 0xc3500 0xab630
 		gpu_pmqos_cl2_max_clock = <0x1506d0 0x19c990>;
 		gpu_pmqos_cl1_max_clock = <0x19c990 0x00>;
 		gpu_cl_dvfs_start_base = <0x5c0a8>;
-		gpu_debug_level = <0x03>;
-		gpu_trace_level = <0x08>;
+		gpu_debug_level = <0x01>;   // 0x03
+		gpu_trace_level = <0x02>;   // 0x08
 		gpu_mo_min_clock = <0x5c0a8>;
 		gpu_boost_gpu_min_lock = <0x00>;
 		gpu_boost_egl_min_lock = <0x1c9080>;
@@ -11472,7 +11472,7 @@
 
 			overutil-level0 {
 				cpus = "0-3\04-5\06-7";
-				ratio = <0x19 0x19 0x1e>;
+				ratio = <0x19 0x1e 0x1e>;   // 0x19 0x19 0x1e
 			};
 
 			overutil-level1 {
@@ -11490,12 +11490,12 @@
 
 			coregroup1 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x64>;
+				active-ratio = <0x68>;  // 0x64
 			};
 
 			coregroup2 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x64>;
+				active-ratio = <0x74>;  // 0x64
 			};
 		};
 
@@ -11507,13 +11507,13 @@
 			};
 
 			coregroup1 {
-				active-ratio-limit = <0x30>;
-				active-ratio-boost = <0x23>;
+				active-ratio-limit = <0x2a>;    // 0x30
+				active-ratio-boost = <0x05>;    // 0x23
 			};
 
 			coregroup2 {
-				active-ratio-limit = <0x1e>;
-				active-ratio-boost = <0x00>;
+				active-ratio-limit = <0x1e>;    // 0x1e
+				active-ratio-boost = <0x01>;    // 0x00
 			};
 		};
 
@@ -14305,33 +14305,33 @@
 
 			ananke-energy {
 				mips-per-mhz = <0x10e>;
-				power-coefficient = <0x78>;
+				power-coefficient = <0x70>; // 0x78
 				mips-per-mhz-s = <0xb8>;
 				power-coefficient-s = <0x6a>;
 				static-power-coefficient = <0x27>;
-				efficiency-weight = <0x64>;
+				efficiency-weight = <0x84>; // 0x64
 				efficiency-weight-perf = <0xc8>;
 				phandle = <0x132>;
 			};
 
 			enyo-energy {
 				mips-per-mhz = <0x2a1>;
-				power-coefficient = <0x172>;
+				power-coefficient = <0x18a>; // 0x172
 				mips-per-mhz-s = <0x14f>;
 				power-coefficient-s = <0x120>;
 				static-power-coefficient = <0x51>;
-				efficiency-weight = <0xc8>;
+				efficiency-weight = <0x34>; // 0xc8
 				efficiency-weight-perf = <0xc8>;
 				phandle = <0x139>;
 			};
 
 			lion-energy {
 				mips-per-mhz = <0x326>;
-				power-coefficient = <0x35c>;
+				power-coefficient = <0x37c>; // 0x35c
 				mips-per-mhz-s = <0x11d>;
 				power-coefficient-s = <0x22f>;
 				static-power-coefficient = <0x10e>;
-				efficiency-weight = <0x21>;
+				efficiency-weight = <0x21>; // 0x21
 				efficiency-weight-perf = <0x12c>;
 				phandle = <0x13e>;
 			};
