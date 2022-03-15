@@ -86,9 +86,16 @@ struct esgov_cpu {
 	unsigned long		min;		/* min util matched with min_cap */
 };
 
+struct esgov_param {
+	struct cpumask		cpus;
+	int			step;
+	int			patient_mode;
+};
+
 struct kobject *esg_kobj;
 DEFINE_PER_CPU(struct esgov_policy *, esgov_policy);
 DEFINE_PER_CPU(struct esgov_cpu, esgov_cpu);
+DEFINE_PER_CPU(struct esgov_param *, esgov_param);
 bool esg_apply_migov;
 
 /*************************************************************************/
@@ -193,23 +200,40 @@ static int esg_cpufreq_pm_qos_callback(struct notifier_block *nb,
 /************************************************************************/
 /*				BOOST				 	*/
 /************************************************************************/
+static void
+esg_sync_param(struct esgov_policy *esg_policy, struct esgov_param *param)
+{
+	esg_update_step(esg_policy, param->step);
+	esg_policy->patient_mode = param->patient_mode;
+}
+
 static int esg_mode_update_callback(struct notifier_block *nb,
 				unsigned long val, void *v)
 {
 	struct emstune_set *cur_set = (struct emstune_set *)v;
 	struct esgov_policy *esg_policy;
+	struct esgov_param *param;
 	int cpu;
 
 	for_each_possible_cpu(cpu) {
 		if (cpu != cpumask_first(cpu_coregroup_mask(cpu)))
 			continue;
 
+		param = per_cpu(esgov_param, cpu);
+		if (unlikely(!param))
+			continue;
+
+		param->step = cur_set->esg.step[cpu];
+		param->patient_mode = cur_set->esg.patient_mode[cpu];
+
 		esg_policy = per_cpu(esgov_policy, cpu);
 		if (unlikely((!esg_policy) || !esg_policy->enabled))
 			continue;
 
-		esg_update_step(esg_policy, cur_set->esg.step[cpu]);
-		esg_policy->patient_mode = cur_set->esg.patient_mode[cpu];
+		esg_sync_param(esg_policy, param);
+
+		// esg_update_step(esg_policy, cur_set->esg.step[cpu]);
+		// esg_policy->patient_mode = cur_set->esg.patient_mode[cpu];
 	}
 
 	esg_apply_migov = cur_set->migov.migov_en;
@@ -521,7 +545,7 @@ static struct esgov_policy *esgov_policy_alloc(struct cpufreq_policy *policy)
 		goto free_allocation;
 	esg_policy->patient_mode = val;
 
-	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
+	esg_policy->rate_delay_ns = 10 / 2 * NSEC_PER_MSEC;  // 4
 
 	/* Init Sysfs */
 	if (kobject_init_and_add(&esg_policy->kobj, &ktype_esg, esg_kobj,
@@ -981,9 +1005,26 @@ static void esgov_stop(struct cpufreq_policy *policy)
 static void esgov_limits(struct cpufreq_policy *policy)
 {
 	struct esgov_policy *esg_policy = policy->governor_data;
+	unsigned long max = arch_scale_cpu_capacity(NULL, policy->cpu);
+	unsigned int target_util, target_freq;
 
 	mutex_lock(&esg_policy->work_lock);
 	cpufreq_policy_apply_limits(policy);
+
+	/* Get target util of the cluster of this cpu */
+	target_util = esgov_get_target_util(esg_policy, 0, max);
+
+	/* get target freq for new target util */
+	target_freq = get_next_freq(esg_policy, target_util, max);
+
+	/*
+	 * After freq limits change, CPUFreq policy->cur can be different
+	 * with ESG's target freq. In that case, explicitly change current freq
+	 * to ESG's target freq
+	 */
+	if (policy->cur != target_freq)
+		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_L);
+
 	mutex_unlock(&esg_policy->work_lock);
 }
 
@@ -1108,5 +1149,6 @@ static int __init esgov_register(void)
 
 	return cpufreq_register_governor(&energy_step_gov);
 }
+
 fs_initcall(esgov_register);
 
