@@ -7554,17 +7554,17 @@
 		gpu_pmqos_cpu_cluster_num = <0x03>;
 		gpu_pmu_status_reg_offset = <0x2204>;
 		gpu_pmu_status_local_pwr_mask = <0x01>;
-		gpu_max_clock = <0xcb200>;              // 0xc3500
-		gpu_max_clock_limit = <0xcb200>;        // 0xc3500
+		gpu_max_clock = <0xc3500>;              // 0xc3500
+		gpu_max_clock_limit = <0xc3500>;        // 0xc3500
 		gpu_min_clock = <0x26160>;
 		gpu_dvfs_start_clock = <0x3f7a0>;
 		gpu_dvfs_bl_config_clock = <0x26160>;
-		gpu_default_voltage = <0xcb200>;        // 0xc3500
+		gpu_default_voltage = <0xc3500>;        // 0xc3500
 		gpu_cold_minimum_vol = <0x00>;
 		gpu_voltage_offset_margin = <0x493e>;   // 0x927c
 		gpu_tmu_control = <0x01>;
 		gpu_temp_throttling_level_num = <0x06>;
-		gpu_temp_throttling = <0xcb200 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0>;    // 0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0
+		gpu_temp_throttling = <0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0>;    // 0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0
 		gpu_power_coeff = <0x271>;
 		gpu_dvfs_time_interval = <0x05>;
 		gpu_default_wakeup_lock = <0x01>;
@@ -7581,12 +7581,12 @@
 		gpu_pmqos_compute_mif_max_clock = <0x26ae58>;
 		gpu_pmqos_mif_max_clock = <0x29a810>;
 		gpu_pmqos_mif_max_clock_base = <0x9eb10>;
-		gpu_pmqos_g3d_clock = <0xcb200 0xab630>;        // 0xc3500 0xab630
+		gpu_pmqos_g3d_clock = <0xc3500 0xab630>;        // 0xc3500 0xab630
 		gpu_pmqos_cl2_max_clock = <0x1506d0 0x19c990>;
 		gpu_pmqos_cl1_max_clock = <0x19c990 0x00>;
 		gpu_cl_dvfs_start_base = <0x5c0a8>;
-		gpu_debug_level = <0x01>;   // 0x03
-		gpu_trace_level = <0x02>;   // 0x08
+		gpu_debug_level = <0x04>;   // 0x03 : DEBUG(1) INFO(2) WARNING(3) ERROR(4)
+		gpu_trace_level = <0x01>;   // 0x08
 		gpu_mo_min_clock = <0x5c0a8>;
 		gpu_boost_gpu_min_lock = <0x00>;
 		gpu_boost_egl_min_lock = <0x1c9080>;
@@ -12015,7 +12015,7 @@
 				};
 
 				esg {
-					step = <0x0a 0x08 0x0a>;
+					step = <0x0a 0x08 0x0a>;            // 0x0a 0x08 0x0a
 					patient_mode = <0x00 0x00 0x00>;
 				};
 
@@ -14420,14 +14420,14 @@
 	};
 
 	esg {
-		thread-run-on = "0-5";
+		thread-run-on = "0-5";          // 0-5
 
 		domain@0 {
 			device_type = "esgov-pol0";
 			shared-cpus = "0-3";
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
-			step = <0x0a>;
+			step = <0x04>;              // 0x0a
 			patient_mode = <0x00>;
 		};
 
@@ -14436,7 +14436,7 @@
 			shared-cpus = "4-5";
 			pm_qos-min-class = <0x05>;
 			pm_qos-max-class = <0x06>;
-			step = <0x08>;
+			step = <0x06>;              // 0x08
 			patient_mode = <0x00>;
 		};
 
@@ -14445,7 +14445,7 @@
 			shared-cpus = "6-7";
 			pm_qos-min-class = <0x07>;
 			pm_qos-max-class = <0x08>;
-			step = <0x0a>;
+			step = <0x08>;              // 0x0a
 			patient_mode = <0x00>;
 		};
 	};
