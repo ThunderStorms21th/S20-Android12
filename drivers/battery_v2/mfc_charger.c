@@ -5517,7 +5517,7 @@ ssize_t mfc_store_attrs(struct device *dev,
 	{
 		u32 header_temp, data_com_temp, data_val_temp;
 
-		if (sscanf(buf, "0x%4x 0x%4x 0x%4x\n", &header_temp, &data_com_temp, &data_val_temp) == 3) {
+		if (sscanf(buf, "0x%4hhx 0x%4hhx 0x%4hhx\n", &header_temp, &data_com_temp, &data_val_temp) == 3) {
 			header = (u8)header_temp;
 			data_com = (u8)data_com_temp;
 			data_val = (u8)data_val_temp;
