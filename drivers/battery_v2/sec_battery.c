@@ -6549,7 +6549,7 @@ static int sec_usb_get_property(struct power_supply *psy,
 		/* mA -> uA */
 		val->intval = battery->pdata->charging_current[battery->cable_type].input_current_limit * 1000;
 		return 0;
-	default
+	default:
 		return -EINVAL;
 	}
 
