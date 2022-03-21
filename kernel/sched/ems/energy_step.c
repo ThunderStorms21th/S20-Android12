@@ -545,7 +545,22 @@ static struct esgov_policy *esgov_policy_alloc(struct cpufreq_policy *policy)
 		goto free_allocation;
 	esg_policy->patient_mode = val;
 
-	esg_policy->rate_delay_ns = 10 / 2 * NSEC_PER_MSEC;  // 4
+#ifdef CONFIG_EMS_CLUSTERS
+    int cpu;
+
+    /* Set RATE_DELAY_US depends on cluster LITTLE.big.MID  - XDA@nalas */
+	if (policy->cpu == 0) {
+    	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
+    	}
+	if (policy->cpu == 4) {
+    	esg_policy->rate_delay_ns = 11 / 3 * NSEC_PER_MSEC;
+    	}
+	if (policy->cpu == 6) {
+    	esg_policy->rate_delay_ns = 13 / 3 * NSEC_PER_MSEC;
+    	}
+#else
+	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
+#endif
 
 	/* Init Sysfs */
 	if (kobject_init_and_add(&esg_policy->kobj, &ktype_esg, esg_kobj,
