@@ -11472,7 +11472,7 @@
 
 			overutil-level0 {
 				cpus = "0-3\04-5\06-7";
-				ratio = <0x19 0x1e 0x1e>;   // 0x19 0x19 0x1e
+				ratio = <0x15 0x1b 0x1e>;   // 0x19 0x19 0x1e
 			};
 
 			overutil-level1 {
@@ -11490,12 +11490,12 @@
 
 			coregroup1 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x68>;  // 0x64
+				active-ratio = <0x70>;  // 0x64
 			};
 
 			coregroup2 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x74>;  // 0x64
+				active-ratio = <0x60>;  // 0x64
 			};
 		};
 
@@ -11507,13 +11507,13 @@
 			};
 
 			coregroup1 {
-				active-ratio-limit = <0x2a>;    // 0x30
-				active-ratio-boost = <0x05>;    // 0x23
+				active-ratio-limit = <0x20>;    // 0x30
+				active-ratio-boost = <0x0a>;    // 0x23
 			};
 
 			coregroup2 {
 				active-ratio-limit = <0x1e>;    // 0x1e
-				active-ratio-boost = <0x01>;    // 0x00
+				active-ratio-boost = <0x05>;    // 0x00
 			};
 		};
 
@@ -14305,11 +14305,11 @@
 
 			ananke-energy {
 				mips-per-mhz = <0x10e>;
-				power-coefficient = <0x70>; // 0x78
+				power-coefficient = <0x78>; // 0x78
 				mips-per-mhz-s = <0xb8>;
 				power-coefficient-s = <0x6a>;
 				static-power-coefficient = <0x27>;
-				efficiency-weight = <0x84>; // 0x64
+				efficiency-weight = <0x64>; // 0x64
 				efficiency-weight-perf = <0xc8>;
 				phandle = <0x132>;
 			};
@@ -14320,14 +14320,14 @@
 				mips-per-mhz-s = <0x14f>;
 				power-coefficient-s = <0x120>;
 				static-power-coefficient = <0x51>;
-				efficiency-weight = <0x34>; // 0xc8
+				efficiency-weight = <0x64>; // 0xc8
 				efficiency-weight-perf = <0xc8>;
 				phandle = <0x139>;
 			};
 
 			lion-energy {
 				mips-per-mhz = <0x326>;
-				power-coefficient = <0x37c>; // 0x35c
+				power-coefficient = <0x34c>; // 0x35c
 				mips-per-mhz-s = <0x11d>;
 				power-coefficient-s = <0x22f>;
 				static-power-coefficient = <0x10e>;
@@ -14427,7 +14427,7 @@
 			shared-cpus = "0-3";
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
-			step = <0x04>;              // 0x0a
+			step = <0x0c>;              // 0x0a
 			patient_mode = <0x00>;
 		};
 
