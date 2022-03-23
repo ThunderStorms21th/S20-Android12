@@ -31,7 +31,7 @@ on boot
    # VM
    write /proc/sys/vm/dirty_expire_centisecs 3000
    write /proc/sys/vm/dirty_writeback_centisecs 3000
-   write /proc/sys/vm/vfs_cache_pressure 100
+   write /proc/sys/vm/vfs_cache_pressure 130
    # MISC
    write > /sys/module/mmc_core/parameters/use_spi_crc N
    
@@ -39,8 +39,8 @@ on boot
     setprop hw3d.force 1
     setprop hw2d.force 1
     ## composition.type - gpu cd2 dyn cpu
-    setprop debug.composition.type gpu
-    setprop persist.sys.composition.type gpu
+    setprop debug.composition.type c2d
+    setprop persist.sys.composition.type c2d
     setprop hwui.render_dirty_regions false
     setprop debug.gr.numframebuffers 3
     setprop debug.egl.swapinterval -60
@@ -82,8 +82,8 @@ on boot
 ## Decrease time for screen off/on durrign call
     setprop ro.telephony.call_ring.delay 0
     setprop ring.delay 0
-    setprop ro.lge.proximity.delay 15
-    setprop mot.proximity.delay 15
+    setprop ro.lge.proximity.delay 10
+    setprop mot.proximity.delay 10
     setprop ro.mot.buttonlight.timeout 0
     setprop ro.config.vc_call_steps 20
 ## VM
@@ -91,21 +91,6 @@ on boot
     ## Native VM bridges    
     setprop ro.enable.native.bridge.exec 1
     setprop ro.enable.native.bridge.exec64 1
-## Mobile Data Tweaks
-    setprop ro.ril.hsxpa 5
-    setprop ro.ril.hspa 36
-    setprop ro.ril.lte 5
-    setprop ro.ril.ltea 5
-    setprop ro.ril.hep 0
-    setprop ro.ril.def.agps.mode 2
-    setprop ro.ril.enable.dtm 1
-    setprop ro.ril.hspaclass 12
-    setprop ro.ril.lteclass 12
-    setprop ro.ril.gprsclass 12
-    setprop ro.ril.hsupa.category 8
-    setprop ro.ril.hsdpa.category 28
-    setprop ro.ril.lte.category 8
-    setprop ro.ril.ltea.category 28
 ## Signal Tweaks
     setprop persist.cust.tel.eons 1 
     setprop ro.config.hw_fast_dormancy 1
@@ -116,33 +101,6 @@ on boot
     setprop persist.telephony.support.ipv4 1
     setprop af.fast_period_size 192
     setprop af.fast_track_multipler 1
-## DNS Tweaks
-    setprop net.rmnet0.dns1 1.1.1.1
-    setprop net.rmnet0.dns2 1.0.0.1
-    setprop net.rmnet1.dns1 1.1.1.1
-    setprop net.rmnet1.dns2 1.0.0.1
-    setprop net.dns1 1.1.1.1
-    setprop net.dns2 1.0.0.1
-    setprop net.gprs.dns1 1.1.1.1
-    setprop net.gprs.dns2 1.0.0.1
-    setprop net.wcdma.dns1 1.1.1.1
-    setprop net.wcdma.dns2 1.0.0.1
-    setprop net.hspa.dns1 1.1.1.1
-    setprop net.hspa.dns2 1.0.0.1
-    setprop net.hsdpa.dns1 1.1.1.1
-    setprop net.hsdpa.dns2 1.0.0.1
-    setprop net.lte.dns1 1.1.1.1
-    setprop net.lte.dns2 1.0.0.1
-    setprop net.ltea.dns1 1.1.1.1
-    setprop net.ltea.dns2 1.0.0.1
-    setprop net.ppp0.dns1 1.1.1.1
-    setprop net.ppp0.dns2 1.0.0.1
-    setprop net.pdpbr1.dns1 1.1.1.1
-    setprop net.pdpbr1.dns2 1.0.0.1
-    setprop net.wlan0.dns1 1.1.1.1
-    setprop net.wlan0.dns2 1.0.0.1
-    setprop net.eth0.dns1 1.1.1.1
-    setprop net.eth0.dns2 1.0.0.1
 ## General Tweaks
     setprop persist.sys.purgeable_assets 1
     setprop ro.config.disable.hw_accel false
@@ -159,7 +117,7 @@ on boot
     setprop net.tethering.noprovisioning true
     setprop ro.config.nocheckin 1
 ## Game tweaks
-    setprop persist.sys.NV_FPSLIMIT 160
+    setprop persist.sys.NV_FPSLIMIT 200
     setprop persist.sys.NV_POWERMODE 1
     setprop persist.sys.NV_PROFVER 15
     setprop persist.sys.NV_STEREOCTRL 0
@@ -167,8 +125,8 @@ on boot
     setprop persist.sys.NV_STEREOSEP 20
 ## FPS Lock
     setprop ro.fps_enable 1
-    setprop ro.fps.capsmin 70
-    setprop ro.fps.capsmax 160
+    setprop ro.fps.capsmin 60
+    setprop ro.fps.capsmax 200
 ## Grpahics tweaks
     setprop debug.enabletr true
     setprop debug.overlayui.enable 1
@@ -192,17 +150,12 @@ on boot
 ## Render dirty region
     setprop DEBUG_DIRTY_REGION false
     setprop debug.hwui.profile false
-    setprop debug.hwui.profile.maxframes 70
+    setprop debug.hwui.profile.maxframes 60
     setprop debug.hwui.skip_empty_damage true
     setprop debug.hwui.use_partial_updates true
     setprop debug.hwui.use_gpu_pixel_buffers false
     setprop debug.hwui.render_dirty_regions false
     setprop debug.hwui.show_dirty_regions false
-## Launcher Is Kept in Memory
-    setprop ro.HOME_APP_ADJ 1
-    setprop ro.FOREGROUND_APP_ADJ 0
-    setprop ro.VISIBLE_APP_ADJ 4
-    setprop ro.HIDDEN_APP_MIN_ADJ 7
 ## Battery save
     setprop pm.sleep_mode 1
     setprop power_supply.wakeup enable
@@ -214,11 +167,6 @@ on boot
     setprop persist.radio.add_power_save 1
     setprop ro.ril.sensor.sleep.control 1
     setprop persist.sys.shutdown.mode hibernate
-## Faster streaming videos
-    setprop media.stagefright.enable-player true
-    setprop media.stagefright.enable-meta true
-    setprop media.stagefright.enable-scan false
-    setprop media.stagefright.enable-http true
 ## Sensor Sleep Control
     setprop ro.ril.sensor.sleep.control 1
     setprop ro.wifi.hotspotUI 1
@@ -251,7 +199,7 @@ on boot
     setprop persist.bt.a2dp.aptx_hd_disable false
     setprop persist.vendor.bt.a2dp_offload_cap sbc-aptx-aptxtws-aptxhd-aptxadaptive-aac-ldac
 ## Scrolling Responsiveness
-    setprop windowsmgr.max_events_per_sec 90
+    setprop windowsmgr.max_events_per_sec 60
     setprop persist.cust.tel.eons 1
 # RIL Wakelock Optimization
     setprop ro.ril.wake_lock_timeout 10000
@@ -282,12 +230,6 @@ on boot
     setprop persist.data.df.dev_name rmnet_usb0
 ## Faster App launch
     setprop fs.lease-break-time 20
-    setprop fs.epoll.max_user_watches 206530
-    setprop fs.file-max 533104
-    setprop fs.nr_open 1048576
-    setprop fs.inotify.max_queued_events 32000
-    setprop fs.inotify.max_user_instances 512
-    setprop fs.inotify.max_user_watches 10240
     setprop vold.post_fs_data_done 1
 
 on property:sys.boot_completed=1

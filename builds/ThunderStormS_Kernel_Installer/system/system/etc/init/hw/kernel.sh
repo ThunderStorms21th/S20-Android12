@@ -89,8 +89,8 @@ rm -f $LOG
 
     # Midle CPU
     #echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-    echo "377000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq   # 507000
-    echo "2600000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq # 2504
+    echo "507000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq   # 507000
+    echo "2504000" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq # 2504
 
     # BIG CPU
     #echo "schedutil" > /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor
@@ -115,8 +115,8 @@ rm -f $LOG
     echo "64" > /proc/sys/kernel/random/read_wakeup_threshold
 
     # VM
-    echo "100" > /proc/sys/vm/vfs_cache_pressure
-    echo "140" > /proc/sys/vm/swappiness
+    echo "130" > /proc/sys/vm/vfs_cache_pressure
+    echo "150" > /proc/sys/vm/swappiness
     echo "3000" > /proc/sys/vm/dirty_writeback_centisecs
     echo "3000" > /proc/sys/vm/dirty_expire_centisecs
     echo "50" > /proc/sys/vm/overcommit_ratio
@@ -125,7 +125,7 @@ rm -f $LOG
 
     # Fs
     echo "0" > /proc/sys/fs/dir-notify-enable
-    echo "10" > /proc/sys/fs/lease-break-time
+    echo "15" > /proc/sys/fs/lease-break-time
     echo "131072" > /proc/sys/fs/aio-max-nr
 
     # ZRAM
@@ -145,10 +145,10 @@ rm -f $LOG
     # GPU set at max/min freq
     echo "800000" > /sys/kernel/gpu/gpu_max_clock
     echo "156000" > /sys/kernel/gpu/gpu_min_clock
-    echo "adaptive" > /sys/devices/platform/18500000.mali/power_policy
+    # echo "adaptive" > /sys/devices/platform/18500000.mali/power_policy
     echo "1" > /sys/devices/platform/18500000.mali/dvfs_governor
     echo "455000" > /sys/devices/platform/18500000.mali/highspeed_clock
-    echo "90" > /sys/devices/platform/18500000.mali/highspeed_load
+    echo "95" > /sys/devices/platform/18500000.mali/highspeed_load
     echo "1" > /sys/devices/platform/18500000.mali/highspeed_delay
     echo "0" > /sys/kernel/gpu/gpu_cl_boost_disable  # 0
 
@@ -159,7 +159,7 @@ rm -f $LOG
    echo "0" > /sys/kernel/sched/gentle_fair_sleepers
 
    # I/O sched settings
-   echo "noop" > /sys/block/sda/queue/scheduler
+   echo "cfq" > /sys/block/sda/queue/scheduler
    # echo "256" > /sys/block/sda/queue/read_ahead_kb
    echo "kyber" > /sys/block/mmcblk0/queue/scheduler
    # echo "256" > /sys/block/mmcblk0/queue/read_ahead_kb
@@ -185,7 +185,7 @@ rm -f $LOG
 
    ## Kernel Stune											DEFAULT VALUES
    # GLOBAL
-   echo "6" > /dev/stune/schedtune.boost					# 0
+   echo "4" > /dev/stune/schedtune.boost					# 0
    #echo "0" > /dev/stune/schedtune.band					# 0
    echo "0" > /dev/stune/schedtune.prefer_idle				# 0
    echo "0" > /dev/stune/schedtune.prefer_perf				# 0
@@ -193,7 +193,7 @@ rm -f $LOG
    #echo "0" > /dev/stune/schedtune.ontime_en				# 0
    
    # TOP-APP
-   echo "6" > /dev/stune/top-app/schedtune.boost			# 0
+   echo "4" > /dev/stune/top-app/schedtune.boost			# 0
    #echo "0" > /dev/stune/top-app/schedtune.band			# 0
    echo "0" > /dev/stune/top-app/schedtune.prefer_idle		# 1
    echo "0" > /dev/stune/top-app/schedtune.prefer_perf		# 0
@@ -201,7 +201,7 @@ rm -f $LOG
    #echo "1" > /dev/stune/top-app/schedtune.ontime_en		# 0
    
    # RT
-   echo "6" > /dev/stune/rt/schedtune.boost					# 0
+   echo "4" > /dev/stune/rt/schedtune.boost					# 0
    #echo "0" > /dev/stune/rt/schedtune.band					# 0
    echo "0" > /dev/stune/rt/schedtune.prefer_idle			# 0
    echo "0" > /dev/stune/rt/schedtune.prefer_perf			# 0
@@ -254,7 +254,7 @@ rm -f $LOG
    echo "30" > /proc/sys/kernel/sched_rr_timeslice_ms  #30
    echo "64" > /proc/sys/kernel/sched_nr_migrate
    echo "1" > /sys/module/cpuidle/parameters/off  # 0
-   echo "performance" > /sys/module/pcie_aspm/parameters/policy
+   # echo "performance" > /sys/module/pcie_aspm/parameters/policy
    # policy - default performance powersave powersupersave
    echo "ff" > /proc/irq/default_smp_affinity  #ff
    echo "ff" > /sys/bus/workqueue/devices/writeback/cpumask   # ff
