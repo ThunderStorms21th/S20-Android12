@@ -9,7 +9,11 @@
 
 #ifdef CONFIG_BLOCK_UNWANTED_FILES
 static char *files_array[] = {
-	"fde", "lspeed", "nfsinjector", "com.feravolt", "lkt"
+	"fde", "lspeed", "nfsinjector", "com.feravolt", "com.feravolt.fdeai", "lkt", "MAGNE", "com.zeetaa",
+	"com.paget96.lsandroid", "GamersExtreme", "brutal", "legendary_kernel_tweaks",
+	"MAGNETAR", "M4GN3T4R", "autoSPPH", "beastmode", "MRB", "MSUSReborn", "SPPHULTRANET",
+	"iUnlockerVII", "KTSR", "ZeruxTweaks", "com.paget96.lktmanager", "xtweak_ep", "xtweak_ao",
+
 };
 
 static char *paths_array[] = {
