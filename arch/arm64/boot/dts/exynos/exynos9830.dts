@@ -7586,7 +7586,7 @@
 		gpu_pmqos_cl1_max_clock = <0x19c990 0x00>;
 		gpu_cl_dvfs_start_base = <0x5c0a8>;
 		gpu_debug_level = <0x04>;   // 0x03 : DEBUG(1) INFO(2) WARNING(3) ERROR(4)
-		gpu_trace_level = <0x01>;   // 0x08
+		gpu_trace_level = <0x02>;   // 0x08
 		gpu_mo_min_clock = <0x5c0a8>;
 		gpu_boost_gpu_min_lock = <0x00>;
 		gpu_boost_egl_min_lock = <0x1c9080>;
@@ -11490,12 +11490,12 @@
 
 			coregroup1 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x70>;  // 0x64
+				active-ratio = <0x6f>;  // 0x64
 			};
 
 			coregroup2 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x60>;  // 0x64
+				active-ratio = <0x74>;  // 0x64
 			};
 		};
 
@@ -11508,12 +11508,12 @@
 
 			coregroup1 {
 				active-ratio-limit = <0x20>;    // 0x30
-				active-ratio-boost = <0x0a>;    // 0x23
+				active-ratio-boost = <0x05>;    // 0x23
 			};
 
 			coregroup2 {
 				active-ratio-limit = <0x1e>;    // 0x1e
-				active-ratio-boost = <0x05>;    // 0x00
+				active-ratio-boost = <0x00>;    // 0x00
 			};
 		};
 
@@ -11524,13 +11524,13 @@
 			attacker_search_timout_msec = <0x20>;
 
 			victim {
-				search_hist_size = <0x04>;
+				search_hist_size = <0x02>;  // 0x04
 				event_thr = <0x352>;
 				active_thr = <0x2bc>;
 			};
 
 			attacker {
-				search_hist_size = <0x01>;
+				search_hist_size = <0x01>;  // 0x01
 				event_thr = <0x0a>;
 				active_thr = <0x352>;
 			};
@@ -14316,7 +14316,7 @@
 
 			enyo-energy {
 				mips-per-mhz = <0x2a1>;
-				power-coefficient = <0x18a>; // 0x172
+				power-coefficient = <0x198>; // 0x172
 				mips-per-mhz-s = <0x14f>;
 				power-coefficient-s = <0x120>;
 				static-power-coefficient = <0x51>;
@@ -14327,7 +14327,7 @@
 
 			lion-energy {
 				mips-per-mhz = <0x326>;
-				power-coefficient = <0x34c>; // 0x35c
+				power-coefficient = <0x36c>; // 0x35c
 				mips-per-mhz-s = <0x11d>;
 				power-coefficient-s = <0x22f>;
 				static-power-coefficient = <0x10e>;
@@ -14427,7 +14427,7 @@
 			shared-cpus = "0-3";
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
-			step = <0x0c>;              // 0x0a
+			step = <0x08>;              // 0x0a
 			patient_mode = <0x00>;
 		};
 
@@ -14436,7 +14436,7 @@
 			shared-cpus = "4-5";
 			pm_qos-min-class = <0x05>;
 			pm_qos-max-class = <0x06>;
-			step = <0x06>;              // 0x08
+			step = <0x05>;              // 0x08
 			patient_mode = <0x00>;
 		};
 
@@ -14445,7 +14445,7 @@
 			shared-cpus = "6-7";
 			pm_qos-min-class = <0x07>;
 			pm_qos-max-class = <0x08>;
-			step = <0x08>;              // 0x0a
+			step = <0x05>;              // 0x0a
 			patient_mode = <0x00>;
 		};
 	};
