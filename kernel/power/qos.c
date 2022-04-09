@@ -827,7 +827,7 @@ int pm_qos_update_target(struct pm_qos_constraints *c, struct plist_node *node,
 		return 1;
 	}
 
-	if (cpumask_empty(&cpus))
+	if ((cpumask_empty(&cpus)) || (prev_value == curr_value))
 		return 0;
 
 	if (c->notifiers)
