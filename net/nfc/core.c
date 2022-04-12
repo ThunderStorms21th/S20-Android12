@@ -1162,6 +1162,7 @@ void nfc_unregister_device(struct nfc_dev *dev)
 	if (dev->rfkill) {
 		rfkill_unregister(dev->rfkill);
 		rfkill_destroy(dev->rfkill);
+		dev->rfkill = NULL;
 	}
 
 	if (dev->ops->check_presence) {
