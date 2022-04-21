@@ -26,19 +26,19 @@ SIO_PATCH_VERSION(CFQ_async_starvation, 1, 0, "");
  */
 /* max queue in one round of service */
 static const int cfq_quantum = 4;  /* default 8 */
-static const u64 cfq_fifo_expire[2] = { 80, 350 };  // NSEC_PER_SEC / 4, NSEC_PER_SEC / 8
+static const u64 cfq_fifo_expire[2] = { NSEC_PER_SEC * 35/100, NSEC_PER_SEC * 8/10 };  // NSEC_PER_SEC / 4, NSEC_PER_SEC / 8
 /* maximum backwards seek, in KiB */
-static const int cfq_back_max = 16 * 1024 * 1024;   // 16 * 1024
+static const int cfq_back_max = 32 * 1024;   // 16 * 1024
 /* penalty of a backwards seek */
 static const int cfq_back_penalty = 1; /* default 2 */
-static const u64 cfq_slice_sync = 70;   // NSEC_PER_SEC / 10
-static u64 cfq_slice_async = 60;        // NSEC_PER_SEC / 25
+static const u64 cfq_slice_sync = NSEC_PER_SEC * 8/100;   // NSEC_PER_SEC / 10
+static u64 cfq_slice_async = NSEC_PER_SEC * 6/10;        // NSEC_PER_SEC / 25
 static const int cfq_slice_async_rq = 2;
 static u64 cfq_slice_idle = 0; /* NSEC_PER_SEC / 125 ms */
 static u64 cfq_group_idle = 0; /* NSEC_PER_SEC / 125 ms */
 /* IOPP-cfq_rt_idle_only-v1.0.k4.19 */
 static int cfq_rt_idle_only = 1;
-static const u64 cfq_target_latency = 600; /* 300 ms */ // (u64)NSEC_PER_SEC * 3/10
+static const u64 cfq_target_latency = (u64)NSEC_PER_SEC * 6/10; /* 300 ms */ // (u64)NSEC_PER_SEC * 3/10
 static const int cfq_hist_divisor = 4;
 /* IOPP-cfq_max_async_dispatch-v1.0.4.4 */
 static int cfq_max_async_dispatch = 4;
@@ -4758,7 +4758,7 @@ static int cfq_init_queue(struct request_queue *q, struct elevator_type *e)
 	cfqd->cfq_max_async_dispatch = cfq_max_async_dispatch;
 	cfqd->cfq_group_idle = cfq_group_idle;
 	cfqd->cfq_rt_idle_only = cfq_rt_idle_only;
-	cfqd->cfq_latency = 1;
+	cfqd->cfq_latency = 0;  // default 1
 	cfqd->hw_tag = -1;
 	/*
 	 * we optimistically start assuming sync ops weren't delayed in last
