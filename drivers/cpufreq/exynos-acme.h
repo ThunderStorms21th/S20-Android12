@@ -108,9 +108,9 @@ extern struct list_head *get_domain_list(void);
 
 /*
  * the time it takes on this CPU to switch between
- * two frequencies in nanoseconds
+ * two frequencies in nanoseconds (default: 5000000)
  */
-#define TRANSITION_LATENCY	5000000
+#define TRANSITION_LATENCY	4000000
 
 /*
  * Exynos CPUFreq API
