@@ -32,7 +32,7 @@ export LLVM=1
 
 export K_VERSION="v2.3"
 export K_NAME="ThundeRStormS-Kernel"
-export K_BASE="DFVC7"
+export K_BASE="DFVDB"
 ANDROID=OneUI-S
 MODEL=G98XX-N986B-N985F
 # -----------------------------
