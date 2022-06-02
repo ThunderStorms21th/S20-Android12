@@ -25,8 +25,8 @@ SIO_PATCH_VERSION(CFQ_async_starvation, 1, 0, "");
  * tunables
  */
 /* max queue in one round of service */
-static const int cfq_quantum = 4;  /* default 8 */
-static const u64 cfq_fifo_expire[2] = { NSEC_PER_SEC * 35/100, NSEC_PER_SEC * 8/100 };  // NSEC_PER_SEC / 4, NSEC_PER_SEC / 8
+static const int cfq_quantum = 24;  /* default 8 */
+static const u64 cfq_fifo_expire[2] = { NSEC_PER_SEC * 35/100, NSEC_PER_SEC * 10/100 };  // NSEC_PER_SEC / 4, NSEC_PER_SEC / 8
 /* maximum backwards seek, in KiB */
 static const int cfq_back_max = 32 * 1024;   // 16 * 1024
 /* penalty of a backwards seek */
