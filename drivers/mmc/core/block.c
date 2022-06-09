@@ -1003,16 +1003,6 @@ static unsigned int mmc_blk_data_timeout_ms(struct mmc_host *host,
 	return ms;
 }
 
-static inline bool mmc_blk_in_tran_state(u32 status)
-{
-	/*
-	 * Some cards mishandle the status bits, so make sure to check both the
-	 * busy indication and the card state.
-	 */
-	return status & R1_READY_FOR_DATA &&
-	       (R1_CURRENT_STATE(status) == R1_STATE_TRAN);
-}
-
 static void mmc_error_count_log(struct mmc_card *card, int index, int error, u32 status)
 {
 	struct mmc_card_error_log *err_log;
@@ -1250,101 +1240,6 @@ static void mmc_card_debug_log_sysfs_init(struct mmc_card *card)
 #define CMD_ERRORS							\
 	(CMD_ERRORS_EXCL_OOR |						\
 	 R1_OUT_OF_RANGE)	/* Command argument out of range */	\
-
-static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
-			    u32 *resp_errs)
-{
-	unsigned long timeout = jiffies + msecs_to_jiffies(timeout_ms);
-	int err = 0;
-	u32 status;
-	struct mmc_queue_req *mq_mrq = NULL;
-	struct mmc_blk_request *brq = NULL;
-
-	mq_mrq = req_to_mmc_queue_req(req);
-	if (mq_mrq)
-		brq = &mq_mrq->brq;
-
-	do {
-		bool done = time_after(jiffies, timeout);
-
-		err = __mmc_send_status(card, &status, 5);
-		if (err) {
-			dev_err(mmc_dev(card->host),
-				"error %d requesting status\n", err);
-			return err;
-		}
-
-		/* Accumulate any response error bits seen */
-		if (resp_errs)
-			*resp_errs |= status;
-
-		if (status & R1_ERROR)
-			pr_err("%s: %s: error sending status cmd, status %#x\n",
-				req->rq_disk->disk_name, __func__, status);
-
-		if (status & CMD_ERRORS) {
-			pr_err("%s: command error reported, status = %#x\n",
-					req->rq_disk->disk_name, status);
-
-			if (mmc_card_sd(card) && brq)
-				brq->data.error = -EIO;
-			else {
-				if (!(status & R1_WP_VIOLATION) && brq)
-					brq->data.error = -EIO;
-			}
-
-			mmc_card_error_logging(card, brq, status);
-
-			if ((R1_CURRENT_STATE(status) == R1_STATE_RCV) ||
-					(R1_CURRENT_STATE(status) == R1_STATE_DATA)) {
-				struct mmc_command cmd = {0};
-
-				cmd.opcode = MMC_STOP_TRANSMISSION;
-				cmd.flags = MMC_RSP_SPI_R1B | MMC_RSP_R1B | MMC_CMD_AC;
-				cmd.busy_timeout = timeout_ms;
-				err = mmc_wait_for_cmd(card->host, &cmd, 5);
-
-				if (err)
-					pr_err("%s: error %d sending stop command\n",
-							req->rq_disk->disk_name, err);
-				else {
-					status = cmd.resp[0];
-					mmc_card_error_logging(card, brq, status);
-				}
-
-				/*
-				 * If the stop cmd also timed out, the card is probably
-				 * not present, so abort. Other errors are bad news too.
-				 */
-				if (err)
-					return -EBUSY;
-			}
-		}
-
-		/*
-		 * Timeout if the device never becomes ready for data and never
-		 * leaves the program state.
-		 */
-		if (done) {
-			dev_err(mmc_dev(card->host),
-				"Card stuck in wrong state! %s status: %#x\n",
-				 __func__, status);
-
-			if (brq)
-				mmc_card_error_logging(card, brq, status);
-
-			return -ETIMEDOUT;
-		}
-
-		/*
-		 * Some cards mishandle the status bits,
-		 * so make sure to check both the busy
-		 * indication and the card state.
-		 */
-	} while (!mmc_blk_in_tran_state(status));
-
-	return err;
-}
 
 static int mmc_blk_reset(struct mmc_blk_data *md, struct mmc_host *host,
 			 int type)
