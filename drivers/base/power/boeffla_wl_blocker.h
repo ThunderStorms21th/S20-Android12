@@ -16,12 +16,11 @@
 
 #define BOEFFLA_WL_BLOCKER_VERSION	"1.1.0"
 
-// wlan_wake;wlan_rx_wake;wlan_ctrl_wake;wlan_txfl_wake;bluetooth_timer;BT_bt_wake;BT_host_wake;bbd_wake_lock;
-// ssp_sensorhub_wake_lock;ssp_wake_lock;ssp_comm_wake_lock;mmc0_detect;grip_wake_lock;wlan_scan_wake;wlan_pm_wake;nfc_wake_lock
-
 // #define LIST_WL_DEFAULT			"wlan_wake;wlan_rx_wake;wlan_ctrl_wake;wlan_txfl_wake;bluetooth_timer;BT_bt_wake;BT_host_wake;bbd_wake_lock;ssp_sensorhub_wake_lock;ssp_wake_lock;ssp_comm_wake_lock;grip_wake_lock;wlan_scan_wake;wlan_pm_wake;nfc_wake_lock"
 
-#define LIST_WL_DEFAULT			""
+#define LIST_WL_DEFAULT			"ssp_sensorhub_wake_lock;ssp_wake_lock;ssp_comm_wake_lock;grip_wake_lock;event0;GPSD;NETLINK;ssp_comm_wake_lock;epoll_system_server_file:[timerfd4_system_server];epoll_system_server_file:[timerfd7_system_server];epoll_InputReader_file:event1;epoll_system_server_file:[timerfd5_system_server];epoll_InputReader_file:event10;epoll_InputReader_file:event0;epoll_InputReader_epollfd;epoll_system_server_epollfd"
+
+// #define LIST_WL_DEFAULT			""
 
 #define LENGTH_LIST_WL				1024
 #define LENGTH_LIST_WL_DEFAULT		(strlen(LIST_WL_DEFAULT) + 1)
