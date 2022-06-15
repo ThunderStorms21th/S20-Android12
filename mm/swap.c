@@ -502,7 +502,8 @@ void __lru_cache_add_active_or_unevictable(struct page *page,
 	VM_BUG_ON_PAGE(PageLRU(page), page);
 
 	if (likely((vma_flags & (VM_LOCKED | VM_SPECIAL)) != VM_LOCKED))
-		SetPageActive(page);
+		if (!lru_gen_enabled())
+		    SetPageActive(page);
 	else if (!TestSetPageMlocked(page)) {
 		/*
 		 * We use the irq-unsafe __mod_zone_page_stat because this
