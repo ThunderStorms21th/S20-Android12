@@ -550,13 +550,13 @@ static struct esgov_policy *esgov_policy_alloc(struct cpufreq_policy *policy)
 
     /* Set RATE_DELAY_US depends on cluster LITTLE.big.MID  - XDA@nalas */
 	if (policy->cpu == 0) {
-    	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 30/10 * NSEC_PER_MSEC;
     	}
 	if (policy->cpu == 4) {
-    	esg_policy->rate_delay_ns = 39/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 45/10 * NSEC_PER_MSEC;
     	}
 	if (policy->cpu == 6) {
-    	esg_policy->rate_delay_ns = 38/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 50/10 * NSEC_PER_MSEC;
     	}
 #else
 	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;

@@ -1050,20 +1050,7 @@ int cpu;
 /* Set PERIOD_SIZE and POLICY_IDX depends on cluster LITTLE.big.MID  - XDA@nalas */
 if (policy->cpu == 0) {
    	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
-   	__read_mostly u64 period_size = 4 * NSEC_PER_MSEC;
-   	}
-if (policy->cpu == 4) {
-   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
-   	__read_mostly u64 period_size = 39/10 * NSEC_PER_MSEC;
-   	}
-if (policy->cpu == 6) {
-   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
-   	__read_mostly u64 period_size = 38/10 * NSEC_PER_MSEC;
-   	}
-#else
-static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
-__read_mostly u64 period_size = 4 * NSEC_PER_MSEC;
-#endif
+   	__read_mostly u64 period_size = 30/10 * NSEC_PER_MSEC;
 
 __read_mostly u64 period_hist_size = 10;                // 10
 static __read_mostly int high_patten_thres = 700;       // 700
@@ -1072,7 +1059,47 @@ static __read_mostly int low_patten_count = 3;          // 3
 static __read_mostly int low_patten_thres = 1024;       // 1024
 static __read_mostly int low_patten_stdev = 200;        // 200
 
+static __read_mostly u64 boost_interval = 17 * NSEC_PER_MSEC;   // 16
+   	}
+if (policy->cpu == 4) {
+   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
+   	__read_mostly u64 period_size = 45/10 * NSEC_PER_MSEC;
+
+__read_mostly u64 period_hist_size = 10;                // 10
+static __read_mostly int high_patten_thres = 800;       // 700
+static __read_mostly int high_patten_stdev = 200;       // 200
+static __read_mostly int low_patten_count = 3;          // 3
+static __read_mostly int low_patten_thres = 1024;       // 1024
+static __read_mostly int low_patten_stdev = 200;        // 200
+
 static __read_mostly u64 boost_interval = 18 * NSEC_PER_MSEC;   // 16
+   	}
+if (policy->cpu == 6) {
+   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
+   	__read_mostly u64 period_size = 50/10 * NSEC_PER_MSEC;
+
+__read_mostly u64 period_hist_size = 10;                // 10
+static __read_mostly int high_patten_thres = 900;       // 700
+static __read_mostly int high_patten_stdev = 200;       // 200
+static __read_mostly int low_patten_count = 3;          // 3
+static __read_mostly int low_patten_thres = 1024;       // 1024
+static __read_mostly int low_patten_stdev = 200;        // 200
+
+static __read_mostly u64 boost_interval = 10 * NSEC_PER_MSEC;   // 16
+   	}
+#else
+static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
+__read_mostly u64 period_size = 4 * NSEC_PER_MSEC;
+
+__read_mostly u64 period_hist_size = 10;                // 10
+static __read_mostly int high_patten_thres = 700;       // 700
+static __read_mostly int high_patten_stdev = 200;       // 200
+static __read_mostly int low_patten_count = 3;          // 3
+static __read_mostly int low_patten_thres = 1024;       // 1024
+static __read_mostly int low_patten_stdev = 200;        // 200
+
+static __read_mostly u64 boost_interval = 10 * NSEC_PER_MSEC;   // 16
+#endif
 
 /********************************************************/
 /*		  Helper funcition			*/
