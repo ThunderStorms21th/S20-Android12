@@ -271,7 +271,7 @@ compound_page_dtor * const compound_page_dtors[] = {
  */
 int min_free_kbytes = 1024;
 int user_min_free_kbytes = -1;
-int watermark_scale_factor = 100;    /* default 10 */
+int watermark_scale_factor = 20;    /* default 10 */
 
 /*
  * Extra memory for the system to try freeing. Used to temporarily
@@ -4380,9 +4380,6 @@ retry:
 
 	/* Avoid recursion of direct reclaim */
 	if (current->flags & PF_MEMALLOC)
-		goto nopage;
-
-	if (fatal_signal_pending(current) && !(gfp_mask & __GFP_NOFAIL))
 		goto nopage;
 
 	/* Try direct reclaim and then allocating */
