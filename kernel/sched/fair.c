@@ -7235,6 +7235,7 @@ static void find_best_target(struct sched_domain *sd, cpumask_t *cpus,
 			unsigned long wake_util, new_util, new_util_cuml;
 			long spare_cap;
 			int idle_idx = INT_MAX;
+			int cpu;
 
 			trace_sched_cpu_util(i);
 
@@ -7313,7 +7314,7 @@ static void find_best_target(struct sched_domain *sd, cpumask_t *cpus,
 			new_util = max(min_util, new_util);
 			if ((!(prefer_idle && idle_cpu(i))
 				&& new_util > capacity_orig) ||
-				!task_fits_capacity(p, capacity_orig))
+				!task_fits_capacity(p, capacity_orig, cpu))
 				continue;
 
 			/*
@@ -8095,17 +8096,6 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu,
 		goto unlock;
     }
 
-			for_each_cpu(i, cpu_active_mask) {
-				if (!cpumask_test_cpu(i, &p->cpus_allowed))
-					continue;
-				if (cpu_rq(i)->nr_running < best_nr) {
-					best_nr = cpu_rq(i)->nr_running;
-					best_energy_cpu = i;
-				}
-			}
-		}
-		goto unlock;
-	}
 	/* If there is only one sensible candidate, select it now. */
 	cpu = cpumask_first(candidates);
 	if (weight == 1 && ((uclamp_latency_sensitive(p) && idle_cpu(cpu)) ||
@@ -8162,7 +8152,6 @@ unlock:
 		best_energy_cpu = prev_cpu;
 
 done:
-
 	trace_sched_task_util(p, cpumask_bits(candidates)[0], best_energy_cpu,
 			sync, fbt_env.need_idle, fbt_env.fastpath,
 			placement_boost, start_t, boosted, is_rtg,
@@ -8172,6 +8161,7 @@ done:
 
 fail:
 	rcu_read_unlock();
+
 eas_not_ready:
 	return -1;
 }

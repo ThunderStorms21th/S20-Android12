@@ -641,9 +641,6 @@ static void schedtune_attach(struct cgroup_taskset *tset)
 
 	colocate = st->colocate;
 
-	   if (is_battery_saver_on())
-		   return 0;
-
 	cgroup_taskset_for_each(task, css, tset)
 		sync_cgroup_colocation(task, colocate);
 #endif
@@ -706,7 +703,6 @@ static void schedtune_attach(struct cgroup_taskset *tset)
 		raw_spin_unlock(&bg->lock);
 		task_rq_unlock(rq, task, &rq_flags);
 	}
->>>>>>> 5f38c6e1ada8... sched: checkout to Snapdragon variant scheduler
 }
 
 static int
