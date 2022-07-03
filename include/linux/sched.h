@@ -297,12 +297,6 @@ extern long io_schedule_timeout(long timeout);
 extern void io_schedule(void);
 extern int set_task_boost(int boost, u64 period);
 
-
-static inline int sched_set_boost(int enable)
-{
-	return -EINVAL;
-}
-
 /**
  * struct prev_cputime - snapshot of system and user cputime
  * @utime: time spent in user mode
