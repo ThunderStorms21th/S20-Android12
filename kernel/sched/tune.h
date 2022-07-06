@@ -38,4 +38,5 @@ bool schedtune_cpu_boost_group_active(int idx, int cpu, u64 now);
 
 #define boosted_cpu_util(cpu, other_util) cpu_util_cfs(cpu_rq(cpu))
 
+#define stune_util(cpu, other_util, walt_load) cpu_util_cfs(cpu_rq(cpu))
 #endif /* CONFIG_SCHED_TUNE */

@@ -97,11 +97,12 @@ SCHED_FEAT(WA_BIAS, true)
  * UtilEstimation. Use estimated CPU utilization.
  */
 SCHED_FEAT(UTIL_EST, true)
+SCHED_FEAT(UTIL_EST_FASTUP, true)
 
 /*
  * Fast pre-selection of CPU candidates for EAS.
  */
-SCHED_FEAT(FIND_BEST_TARGET, false)
+SCHED_FEAT(FIND_BEST_TARGET, true)
 
 /*
  * Energy aware scheduling algorithm choices:
@@ -110,7 +111,7 @@ SCHED_FEAT(FIND_BEST_TARGET, false)
  *   the EAS path for wakeup task placement. Otherwise, put
  *   those tasks through the mainline slow path.
  */
-SCHED_FEAT(EAS_PREFER_IDLE, false)   // true
+SCHED_FEAT(EAS_PREFER_IDLE, true)   // true
 
 /*
  * Request max frequency from schedutil whenever a RT task is running.
