@@ -1486,8 +1486,8 @@ static __init void init_slack_timer(struct exynos_cpufreq_domain *domain,
 	}
 }
 
-/*Underclocking little cores to 351 MHz*/
-unsigned long arg_cpu_min_c1 = 351000; 
+/*Underclocking little cores to 442 MHz*/
+unsigned long arg_cpu_min_c1 = 442000; 
 
 static int __init cpufreq_read_cpu_min_c1(char *cpu_min_c1) /*integer remains in memory after function call*/
 {
@@ -1522,8 +1522,8 @@ static __init int cpufreq_read_cpu_min_c2(char *cpu_min_c2)
 }
 __setup("cpu_min_c2=", cpufreq_read_cpu_min_c2);
 
-/*Underclocking prime cores to 350 MHz*/
-unsigned long arg_cpu_min_c3 = 350000; 
+/*Underclocking prime cores to 546 MHz*/
+unsigned long arg_cpu_min_c3 = 546000; 
 
 static __init int cpufreq_read_cpu_min_c3(char *cpu_min_c3)
 {
