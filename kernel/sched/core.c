@@ -20,6 +20,8 @@
 #include "../workqueue_internal.h"
 #include "../smpboot.h"
 
+#include <linux/delay.h>
+
 #include "pelt.h"
 
 #define CREATE_TRACE_POINTS
