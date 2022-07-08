@@ -25,8 +25,8 @@
 
 #define NUM_CHANNEL	4
 #define BUS_WIDTH	16
-#define MIF_UTIL	65
-#define INT_UTIL	70
+#define MIF_UTIL	80  /* default 65 */
+#define INT_UTIL	80  /* default 70 */
 
 #define DEFAULT_QOS	0x4
 #define MAX_QOS		0xF
