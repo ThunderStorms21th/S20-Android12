@@ -1646,51 +1646,6 @@ static void poll_iocb_unlock_wq(struct poll_iocb *req)
 	rcu_read_unlock();
 }
 
-/*
- * Safely lock the waitqueue which the request is on, synchronizing with the
- * case where the ->poll() provider decides to free its waitqueue early.
- *
- * Returns true on success, meaning that req->head->lock was locked, req->wait
- * is on req->head, and an RCU read lock was taken.  Returns false if the
- * request was already removed from its waitqueue (which might no longer exist).
- */
-static bool poll_iocb_lock_wq(struct poll_iocb *req)
-{
-	wait_queue_head_t *head;
-
-	/*
-	 * While we hold the waitqueue lock and the waitqueue is nonempty,
-	 * wake_up_pollfree() will wait for us.  However, taking the waitqueue
-	 * lock in the first place can race with the waitqueue being freed.
-	 *
-	 * We solve this as eventpoll does: by taking advantage of the fact that
-	 * all users of wake_up_pollfree() will RCU-delay the actual free.  If
-	 * we enter rcu_read_lock() and see that the pointer to the queue is
-	 * non-NULL, we can then lock it without the memory being freed out from
-	 * under us, then check whether the request is still on the queue.
-	 *
-	 * Keep holding rcu_read_lock() as long as we hold the queue lock, in
-	 * case the caller deletes the entry from the queue, leaving it empty.
-	 * In that case, only RCU prevents the queue memory from being freed.
-	 */
-	rcu_read_lock();
-	head = smp_load_acquire(&req->head);
-	if (head) {
-		spin_lock(&head->lock);
-		if (!list_empty(&req->wait.entry))
-			return true;
-		spin_unlock(&head->lock);
-	}
-	rcu_read_unlock();
-	return false;
-}
-
-static void poll_iocb_unlock_wq(struct poll_iocb *req)
-{
-	spin_unlock(&req->head->lock);
-	rcu_read_unlock();
-}
-
 static void aio_poll_complete_work(struct work_struct *work)
 {
 	struct poll_iocb *req = container_of(work, struct poll_iocb, work);
