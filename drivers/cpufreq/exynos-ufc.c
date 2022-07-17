@@ -689,6 +689,24 @@ out:
 	return count;
 }
 
+static ssize_t store_dvfs_table(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count)
+{
+	unsigned int id, rate, volt;
+
+	if (sscanf(buf, "%u %u %u", &id, &rate, &volt) == 3) {
+		update_fvmap(id, rate, volt);
+		pr_info("%s: updated DVFS id: %u - rate: %u kHz - volt: %u uV\n", __func__, id, rate, volt);
+		return count;
+	}
+
+	return -EINVAL;
+}
+
+static ssize_t show_dvfs_table(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+{
+	return print_fvmap(buf);
+}
+
 static struct kobj_attribute cpufreq_table =
 	__ATTR(cpufreq_table, 0444, ufc_show_cpufreq_table, NULL);
 static struct kobj_attribute cpufreq_min_limit =
@@ -705,6 +723,8 @@ static struct kobj_attribute execution_mode_change =
 		ufc_show_execution_mode_change, ufc_store_execution_mode_change);
 static struct kobj_attribute cstate_control =
 	__ATTR(cstate_control, 0644, show_cstate_control, store_cstate_control);
+static struct kobj_attribute dvfs_table =
+    __ATTR(dvfs_table, 0644, show_dvfs_table, store_dvfs_table);
 
 /*********************************************************************
  *                          INIT FUNCTION                          *
@@ -830,6 +850,10 @@ static __init int ufc_init_sysfs(void)
 		return ret;
 
 	ret = sysfs_create_file(power_kobj, &cstate_control.attr);
+	if (ret)
+		return ret;
+
+	ret = sysfs_create_file(power_kobj, &dvfs_table.attr);
 	if (ret)
 		return ret;
 
