@@ -127,7 +127,7 @@
 					BUCK2M {
 						regulator-name = "m_vdd_buck2";
 						regulator-min-microvolt = <0x6ddd0>;
-						regulator-max-microvolt = <0x13d620>;
+						regulator-max-microvolt = <0x16e360>;
 						regulator-always-on;
 						regulator-ramp-delay = <0x1770>;
 						regulator-initial-mode = <0x02>;
@@ -137,7 +137,7 @@
 					BUCK3M {
 						regulator-name = "m_vdd_buck3";
 						regulator-min-microvolt = <0x6ddd0>;
-						regulator-max-microvolt = <0x13d620>;
+						regulator-max-microvolt = <0x16e360>;
 						regulator-always-on;
 						regulator-ramp-delay = <0x1770>;
 						regulator-initial-mode = <0x02>;
@@ -167,7 +167,7 @@
 					BUCK7M {
 						regulator-name = "m_vdd_buck7";
 						regulator-min-microvolt = <0x6ddd0>;
-						regulator-max-microvolt = <0x13d620>;
+						regulator-max-microvolt = <0x16e360>;
 						regulator-always-on;
 						regulator-ramp-delay = <0x1770>;
 						regulator-initial-mode = <0x02>;
@@ -177,7 +177,7 @@
 					BUCK8M {
 						regulator-name = "m_vdd_buck8";
 						regulator-min-microvolt = <0x6ddd0>;
-						regulator-max-microvolt = <0xe7ef0>;
+						regulator-max-microvolt = <0x100590>;
 						regulator-always-on;
 						regulator-ramp-delay = <0x1770>;
 						regulator-initial-mode = <0x02>;
