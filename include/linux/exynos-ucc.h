@@ -18,6 +18,8 @@ struct ucc_req {
 };
 
 extern void __init init_exynos_ucc(void);
+extern void update_fvmap(int id, int rate, int volt);
+extern ssize_t print_fvmap(char *buf);
 
 #ifdef CONFIG_ARM64_EXYNOS_CPUIDLE
 extern int filter_cstate(int cpu, int index);
