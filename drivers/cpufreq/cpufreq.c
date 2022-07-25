@@ -17,7 +17,6 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
-#include <linux/binfmts.h>
 #include <linux/cpu.h>
 #include <linux/cpufreq.h>
 #include <linux/cpufreq_times.h>
@@ -692,16 +691,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 /**
  * cpufreq_per_cpu_attr_write() / store_##file_name() - sysfs write access
  */
-#define store_one(file_name, object)					\
+#define store_one(file_name, object)			\
 static ssize_t store_##file_name					\
 (struct cpufreq_policy *policy, const char *buf, size_t count)		\
 {									\
 	int ret, temp;							\
 	struct cpufreq_policy new_policy;				\
-									\
-	if ((&policy->object == &policy->min) &&			\
-			(task_is_booster(current)))			\
-		return count;						\
 									\
 	memcpy(&new_policy, policy, sizeof(*policy));			\
 	new_policy.min = policy->user_policy.min;			\
@@ -715,7 +710,7 @@ static ssize_t store_##file_name					\
 		return -EINVAL;						\
 									\
 	temp = new_policy.object;					\
-	ret = cpufreq_set_policy(policy, &new_policy);			\
+	ret = cpufreq_set_policy(policy, &new_policy);		\
 	if (!ret)							\
 		policy->user_policy.object = temp;			\
 									\
