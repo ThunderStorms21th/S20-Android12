@@ -21,6 +21,9 @@ CONFIG_MALI_KUTF=y
 # CONFIG_FAST_TRACK is not set
 # CONFIG_REFCOUNT_FULL is not set
 
+## Disable profiling support
+# CONFIG_PROFILING is not set
+
 ## GPU
 # CONFIG_MALI_EXYNOS_WAKEUP_CLOCK_WA is not set
 CONFIG_MALI_DDK_VERSION=y
