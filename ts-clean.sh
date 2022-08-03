@@ -5,7 +5,7 @@
 # XDA@nalas
 
 # Make the source clean
-# make mrproper
+make mrproper
 make clean
 
 # Remove unused temporary and old files
@@ -17,8 +17,10 @@ rm -f arch/arm64/boot/dts/exynos/*.dtbo
 rm -f arch/arm64/boot/dts/samsung/*.dtbo
 rm -f arch/arm64/boot/dts/samsung/*.dtbo.reverse.dts
 rm -f arch/arm64/boot/dts/exynos/*.dtbo.reverse.dts
+rm -f arch/arm64/boot/dts/exynos/*.dtb.reverse.dts
 rm -f arch/arm64/boot/dts/samsung/*.dtbo.dtout
 rm -f arch/arm64/boot/dts/exynos/*.dtbo.dtout
+rm -f arch/arm64/boot/dts/exynos/*.dtb.dtout
 rm -f arch/arm64/boot/dts/exynos/*.img
 rm -f arch/arm64/boot/dts/samsung/*.img
 rm -f out/SM-980F/*.img

@@ -14,9 +14,13 @@ export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=$(pwd)/toolchain/gcc-cfp/gcc-cfp-jo
 ## Clang 8.0.8
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang/host/linux-x86/clang-r349610-jopp/bin/clang
 #export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r349610-jopp/bin/clang
+## Clang 14.0.7
+export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
+export CC=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
 ## Clang 14.0.0
-export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
-export CC=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
+# export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
+# export CC=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
+## Clang 12.06
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-12/host/linux-x86/clang-r416183c/bin
 #export CC=$(pwd)/toolchain/clang-12/host/linux-x86/clang-r416183c/bin
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-11/host/linux-x86/clang-r399163b/bin
@@ -30,9 +34,9 @@ export CC=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
 export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN:$CC
 export LLVM=1
 
-export K_VERSION="v2.3"
+export K_VERSION="v2.5"
 export K_NAME="ThundeRStormS-Kernel"
-export K_BASE="DFVDB"
+export K_BASE="EFVDB"
 ANDROID=OneUI-S
 MODEL=G98XX-N986B-N985F
 # -----------------------------
@@ -60,7 +64,7 @@ DEFCONFIG7=exynos9830-c2slte_defconfig
 DEFCONFIG_TS=ts_defconfig
 DEFCONFIG_ED=ed_defconfig
 ZIP_DATE=`date +%Y%m%d`
-ZIP_NAME=$K_NAME-$MODEL-$ANDROID-$K_VERSION-CLANG1401-$ZIP_DATE.zip
+ZIP_NAME=$K_NAME-$MODEL-$ANDROID-$K_VERSION-CLANG1407-$ZIP_DATE.zip
 # -----------------------------
 
 # FUNCTIONS
@@ -515,6 +519,7 @@ MAIN()
     # -----------------------------
     START_TIME=`date +%T`
 	START_TIME_SEC=`date +%s`
+        # ./check_crosscompile.sh
         BUILD_KERNEL_988B
         BUILD_RAMDISK_988B
         BUILD_KERNEL_981B

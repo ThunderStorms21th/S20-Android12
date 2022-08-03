@@ -22,26 +22,15 @@ service kernelinit /system/etc/init/hw/kernel.sh
 
 on boot
     write /sys/bus/workqueue/devices/writeback/cpumask 1
-
-## I/O sched settings
-    write /sys/block/sda/queue/nr_requests 128
-    write /sys/block/mmcblk0/queue/nr_requests 64
-    write /sys/block/sda/queue/iostats 0
-    write /sys/block/mmcblk0/queue/iostats 0
-## VM
-    write /proc/sys/vm/dirty_expire_centisecs 2500
-    write /proc/sys/vm/dirty_writeback_centisecs 2500
-    write /proc/sys/vm/vfs_cache_pressure 100
-    write /proc/sys/vm/page-cluster 0
-    write /sys/block/zram0/max_comp_streams 1
 ## Native VM bridges    
     setprop ro.enable.native.bridge.exec 1
     setprop ro.enable.native.bridge.exec64 1
 ## MISC
-    write > /sys/module/mmc_core/parameters/use_spi_crc N
+    write /sys/module/mmc_core/parameters/use_spi_crc N
+    write /dev/sys/fs/by-name/userdata/cp_interval 500
 ## NET
     setprop net.core.default_qdisc fq
-    setprop net.ipv4.tcp_congestion_control bbr
+    #setprop net.ipv4.tcp_congestion_control bbr
 ## GPU rendering
     setprop hw3d.force 1
     setprop hw2d.force 1
@@ -68,10 +57,10 @@ on boot
     setprop debug.hwui.renderer opengl
     setprop ro.hwui.use_vulkan false
 ## Open Gl Speed
-    setprop pm.dexopt.first-boot=speed
-    setprop pm.dexopt.install=speed
-    setprop pm.dexopt.bg-dexopt=speed
-    setprop pm.dexopt.boot=speed
+    setprop pm.dexopt.first-boot speed
+    setprop pm.dexopt.install speed
+    setprop pm.dexopt.bg-dexopt speed
+    setprop pm.dexopt.boot speed
 ## Disable logs and debugs
     setprop profiler.debugmonitor 0
     setprop profiler.launch 0
@@ -113,7 +102,7 @@ on boot
     setprop ro.ril.enable.amr.wideband 1
     setprop ro.ril.power_collapse 1
     setprop ro.sf.compbypass.enable 0
-    setprop wifi.supplicant_scan_interval 300
+    setprop wifi.supplicant_scan_interval 240
     setprop wlan.wfd.hdcp disable
     setprop net.tethering.noprovisioning true
     setprop ro.config.nocheckin 1
@@ -126,11 +115,11 @@ on boot
     setprop persist.sys.NV_STEREOSEP 20
 ## FPS Lock
     setprop ro.fps_enable 1
-    setprop ro.fps.capsmin 65
+    setprop ro.fps.capsmin 60
     setprop ro.fps.capsmax 160
     setprop debug.gr.swapinterval 0
-    setprop cpu.fps 65
-    setprop gpu.fps 65
+    setprop cpu.fps 60
+    setprop gpu.fps 60
 ## FPS stabilizer
     setprop debug.sf.showupdates 0
     setprop debug.sf.showcpu 0
@@ -156,10 +145,12 @@ on boot
     setprop persist.hwc.enable_vds 1
     setprop ro.surface_flinger.has_HDR_display true
     setprop ro.surface_flinger.has_wide_color_display true
+    # default 3
+    setprop ro.surface_flinger.max_frame_buffer_acquired_buffers 2
 ## Render dirty region
     setprop DEBUG_DIRTY_REGION false
     setprop debug.hwui.profile false
-    setprop debug.hwui.profile.maxframes 65
+    setprop debug.hwui.profile.maxframes 60
     setprop debug.hwui.skip_empty_damage true
     setprop debug.hwui.use_partial_updates true
     setprop debug.hwui.use_gpu_pixel_buffers false
@@ -204,8 +195,11 @@ on boot
     setprop ro.bluetooth.hfp.ver 1.6
     setprop persist.bt.a2dp.aptx_hd_disable false
 ## Scrolling Responsiveness
-    setprop windowsmgr.max_events_per_sec 65
+    setprop windowsmgr.max_events_per_sec 60
     setprop persist.cust.tel.eons 1
+    setprop ro.min_pointer_dur 9 
+    setprop ro.max.fling_velocity 12000
+    setprop ro.min.fling_velocity 8000
 ## RIL Wakelock Optimization
     setprop ro.ril.wake_lock_timeout 10000
 ## Enable Fast Dormancy
@@ -217,8 +211,10 @@ on boot
     setprop dalvik.vm.checkjni false
     setprop dalvik.vm.dexopt-data-only 1
     setprop dalvik.vm.verify-bytecode false
-    setprop dalvik.vm.heaptargetutilization 0.70
+    setprop dalvik.vm.heaptargetutilization 0.77
     setprop dalvik.vm.dexopt-flags m=y,v=n,o=y,u=y
+    persist.sys.dalvik.hyperthreading true
+    persist.sys.dalvik.multithread true
 ## Disable vsync for CPU rendered apps
     setprop debug.cpurend.vsync false
 ## System tweak

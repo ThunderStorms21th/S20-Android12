@@ -1,0 +1,18 @@
+If You want to use this scripts for change Profiles or undervolting for CPUs and MIF
+do like this:
+
+- if You have not "vendor/etc/init.d" folder make it via any root explorer
+- copy wanted profiles/undervolts into "vendor/etc/init.d/" folder
+- do not use two profiles or undervolts - only one profile and one undervolt
+- change permissions for copied files to 0755
+- restart the phone
+
+------------------------------------------------------------------------------------
+PROFILES:
+- balance       : for balanced usage good for battery and responsivness
+- battery       : for more battery life, not for heavy usage only normal daily use
+- gaming        : for game players for good repsonivness and 3d graphic
+- performance   : for very heavy usage and bentchmarks
+
+UV profiles - like in name (first value for CPUs, second for MIF).
+

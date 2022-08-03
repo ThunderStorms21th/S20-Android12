@@ -215,6 +215,9 @@ package_extract_dir("data", "system_root/data");
 package_extract_dir("vendor", "/vendor");
 run_program("/tmp/scripts/perms.sh");
 package_extract_dir("*.apk", "/system_root/data/media/0/Apkinstaller");
+package_extract_dir("*.apk", "/sdcard/Apkinstaller");
+ui_print("@ThundeRStormS - Coping Init.d profiles & undervoltage...");
+package_extract_dir("profiles", "/sdcard/ThunderStorms");
 
 # Install Magisk
 
