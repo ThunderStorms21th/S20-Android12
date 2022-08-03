@@ -1,5 +1,35 @@
 <@center><b><#selectbg_g>ThunderStormS Kernel Installer</#></b></@> 
 
+<*>ThunderStormS Kernel v2.5
+- Linux 4.19.87
+- Samsung source EFVE7 Android 12
+- Some debugs off
+- CPU MASK, SCHED, EMS, VM & DTS
+   improvements
+- Linux source improvements
+- Upstreamed SCHED, CGROUP, IRQ, TIME, 
+   POWER, EXT2/4 & F2FS, FS, CPUFREQ
+   CPUIDLE, MEMORY, LOCKING, EVENTS,
+   DMA, THERMAL, MMC, MISC, BLOCK
+   to Linux 4.19.246
+- Added Anxiety I/O scheduler
+- Added Voltage control for DVFS:
+   CPU's, MIF, INT, ect.
+- Kryber I/O scheduler updated
+- Imported GPU Mali drivers r38p0 from ARM
+- Added support for CPU isolation
+- Removed Alternative Battery Store
+- Added support for bypass Charging
+- Fixed low charging for some users
+- HZ TICK set at 250Hz
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.4
+- Magisk 25.0 (25001)
+- rest like in v2.4
+</*>
+------------------------------------------------
+
 <*>ThunderStormS Kernel v2.4
 - Linux 4.19.87
 - Samsung source EFVDB Android 12
@@ -7,7 +37,7 @@
 - Added new ADAPTIVE_POWER_POLICY GPU
 - CPU MASK, SCHED, EMS, VM & DTS improvements
 - Linux source improvements
-- HZ TICK set at 200Hz
+- HZ TICK set at 300Hz
 - NET: added SCHED_FQ (Fair Queue) support
 - I/O sched - added BFQ
 - SDFAT as FVAT and EXFAT
@@ -17,7 +47,7 @@
 - GPU OC to 832 and 897MHz
 - Added support for CPU Boost by Sultan K
 - Imported GPU Mali drivers R37P0 ValHall
-- Compiled with Clang 14.0.1
+- Compiled with Clang 14.0.7
 - READ_AHEAD_KB = 128
 - Magisk 24.3 (24308)
 - rest like in v2.3
