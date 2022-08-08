@@ -1541,8 +1541,8 @@ static __init int cpufreq_read_cpu_min_c3(char *cpu_min_c3)
 __setup("cpu_min_c3=", cpufreq_read_cpu_min_c3);
 
 
-/*Overclocking little cores to 2002 MHz*/
-unsigned long arg_cpu_max_c1 = 2002000; /*max_cpu_freq=2106 MHz for little cores*/
+/*Overclocking little cores to 2106 MHz*/
+unsigned long arg_cpu_max_c1 = 2106000; /*max_cpu_freq=2106 MHz for little cores*/
 
 static int __init cpufreq_read_cpu_max_c1(char *cpu_max_c1) /*integer remains in memory after function call*/
 {
