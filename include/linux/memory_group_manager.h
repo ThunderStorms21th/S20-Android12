@@ -127,6 +127,23 @@ struct memory_group_manager_ops {
 	u64 (*mgm_update_gpu_pte)(struct memory_group_manager_device *mgm_dev,
 			int group_id, int mmu_level, u64 pte);
 
+    /**
+     * kbase_native_mgm_pte_to_original_pte - Native method to undo changes done in
+     *                                        kbase_native_mgm_update_gpu_pte()
+     *
+     * @mgm_dev:   The memory group manager the request is being made through.
+     * @group_id:  A physical memory group ID, which must be valid but is not used.
+     *             Its valid range is 0 .. MEMORY_GROUP_MANAGER_NR_GROUPS-1.
+     * @mmu_level: The level of the MMU page table where the page is getting mapped.
+     * @pte:       The prepared page table entry.
+     *
+     * This function simply returns the @pte without modification.
+     *
+     * Return: A GPU page table entry to be stored in a page table.
+     */
+    u64 (*mgm_pte_to_original_pte)(struct memory_group_manager_device *mgm_dev,
+             int group_id, int mmu_level, u64 pte);
+
 	/*
 	 * mgm_vmf_insert_pfn_prot - Map a physical page in a group for the CPU
 	 *
