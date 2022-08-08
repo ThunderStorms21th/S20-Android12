@@ -109,6 +109,8 @@ static DEFINE_MUTEX (thermal_suspend_lock);
 #endif
 static bool is_cpu_hotplugged_out;
 
+extern unsigned long arg_cpu_max_c1;
+
 int exynos_build_static_power_table(struct device_node *np, int **var_table,
 		unsigned int *var_volt_size, unsigned int *var_temp_size)
 {
@@ -796,6 +798,19 @@ static int exynos_tmu_parse_ect(struct exynos_tmu_data *data)
 
 		__tz->ntrips = __tz->num_tbps = function->num_of_range;
 		pr_info("Trip count parsed from ECT : %d, zone : %s", function->num_of_range, tz->type);
+
+		/* increase little cpu thermal values */
+		if (ect_strcmp(function->function_name, "LITTLE") == 0) {
+			int shift = 4;
+			int s;
+
+			for (s = 0; s < shift; ++s) {
+				for (i = function->num_of_range-3; i > -1; --i) /* one -1 from function, one -1 from range list calculation, one -1 from not touching last */
+					function->range_list[i+1].max_frequency = function->range_list[i].max_frequency;
+
+			function->range_list[s].max_frequency = arg_cpu_max_c1;
+			}
+		}
 
 		for (i = 0; i < function->num_of_range; ++i) {
 			temperature = function->range_list[i].lower_bound_temperature;
