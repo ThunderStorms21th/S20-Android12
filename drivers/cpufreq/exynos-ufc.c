@@ -14,7 +14,7 @@
  * Log2 of the number of scale size. The frequencies are scaled up or
  * down as the multiple of this number. Default is 8.
  */
-#define SCALE_SIZE 4
+#define SCALE_SIZE 5
 
 #define AUTO_FILL 1
 #define NOT_FILL 0
