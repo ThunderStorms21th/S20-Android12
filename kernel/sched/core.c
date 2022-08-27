@@ -1052,7 +1052,9 @@ get_adjusted_cpumask(const struct task_struct *p,
 {
 	/* Force all performance-critical kthreads onto the big cluster */
 	if (p->flags & PF_PERF_CRITICAL)
-		return cpu_prime_mask && cpu_perf_mask;
+		return cpu_prime_mask;
+//		return cpu_prime_mask && cpu_perf_mask;
+//		return cpu_prime_mask || cpu_perf_mask;
 
 	/* Force all low-power kthreads onto the little cluster */
 	if (p->flags & PF_LOW_POWER)
