@@ -151,7 +151,7 @@ static void esg_update_freq_range(struct cpufreq_policy *policy)
 	esg_policy->max = new_max;
 
 	new_min_idx = cpufreq_frequency_table_target(
-				policy, new_min, CPUFREQ_RELATION_C);   // (L) C H
+				policy, new_min, CPUFREQ_RELATION_L);   // (L) C H
 	new_max_idx = cpufreq_frequency_table_target(
 				policy, new_max, CPUFREQ_RELATION_H);   // (H) C L
 
@@ -550,13 +550,13 @@ static struct esgov_policy *esgov_policy_alloc(struct cpufreq_policy *policy)
 
     /* Set RATE_DELAY_US depends on cluster LITTLE.big.MID  - XDA@nalas */
 	if (policy->cpu == 0) {
-    	esg_policy->rate_delay_ns = 39/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 40/10 * NSEC_PER_MSEC;
     	}
 	if (policy->cpu == 4) {
-    	esg_policy->rate_delay_ns = 39/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 42/10 * NSEC_PER_MSEC;
     	}
 	if (policy->cpu == 6) {
-    	esg_policy->rate_delay_ns = 39/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 42/10 * NSEC_PER_MSEC;
     	}
 #else
 	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
@@ -1038,7 +1038,7 @@ static void esgov_limits(struct cpufreq_policy *policy)
 	 * to ESG's target freq
 	 */
 	if (policy->cur != target_freq)
-		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_L);
+		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);   // (L), C, H
 
 	mutex_unlock(&esg_policy->work_lock);
 }
