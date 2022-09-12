@@ -588,7 +588,6 @@ static void watchdog_enable(unsigned int cpu)
 	 * set.
 	 */
 	mb();
-	*enabled = 1;
 }
 
 static void watchdog_disable(unsigned int cpu)
@@ -610,12 +609,15 @@ static void watchdog_disable(unsigned int cpu)
 	 * No need for barrier here since disabling the watchdog is
 	 * synchronized with hotplug lock
 	 */
-	*enabled = 0;
 }
 
 bool watchdog_configured(unsigned int cpu)
 {
-	return *per_cpu_ptr(&watchdog_en, cpu);
+	/*
+	 * Pretend the watchdog is always configured.
+	 * We will be waiting for the watchdog to be enabled in core isolation
+	 */
+	return true;
 }
 
 static int softlockup_stop_fn(void *data)
