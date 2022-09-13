@@ -1,5 +1,27 @@
 <@center><b><#selectbg_g>ThunderStormS Kernel Installer</#></b></@> 
 
+<*>ThunderStormS Kernel v2.6
+- Linux 4.19.87
+- Samsung source EFVG5 Android 12
+- Some debugs off
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Upstreamed SCHED, CGROUP, IRQ, TIME, 
+   POWER, EXT2/4 & F2FS, FS, CPUFREQ
+   CPUIDLE, MEMORY, LOCKING, EVENTS,
+   DMA, THERMAL, MMC, MISC, BLOCK
+   to Linux 4.19.254
+- Fixed low charging for some users
+- Imported GPU Mali drivers r39p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25203)
+- rest like in v2.5
+</*>
+------------------------------------------------
+
 <*>ThunderStormS Kernel v2.5
 - Linux 4.19.87
 - Samsung source EFVE7 Android 12

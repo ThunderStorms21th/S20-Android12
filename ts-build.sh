@@ -34,9 +34,9 @@ export CC=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
 export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN:$CC
 export LLVM=1
 
-export K_VERSION="v2.5"
+export K_VERSION="v2.6"
 export K_NAME="ThundeRStormS-Kernel"
-export K_BASE="EFVDB"
+export K_BASE="EFVG5"
 ANDROID=OneUI-S
 MODEL=G98XX-N986B-N985F
 # -----------------------------
