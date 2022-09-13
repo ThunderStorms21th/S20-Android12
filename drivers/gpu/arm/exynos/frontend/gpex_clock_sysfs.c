@@ -269,10 +269,10 @@ GPEX_STATIC ssize_t set_min_lock_dvfs(const char *buf, size_t count)
 		if (clock > gpex_clock_get_max_clock_limit())
 			clock = gpex_clock_get_max_clock_limit();
 
-		if (clock == gpex_clock_get_min_clock())
+/*		if (clock == gpex_clock_get_min_clock())
 			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
 		else
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid); */
 	}
 
 	return count;
@@ -368,10 +368,10 @@ GPEX_STATIC ssize_t set_mm_min_lock_dvfs(const char *buf, size_t count)
 
 		gpex_clboost_set_state(CLBOOST_DISABLE);
 
-		if (clock == gpex_clock_get_min_clock())
+/*		if (clock == gpex_clock_get_min_clock())
 			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
 		else
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid); */
 	}
 
 	return count;
