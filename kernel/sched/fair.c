@@ -50,7 +50,7 @@ unsigned int normalized_sysctl_sched_latency		= 5000000ULL;   // 6000000ULL
  */
 unsigned int sysctl_sched_sync_hint_enable = 1;
 
-unsigned int up_migration_util_filter = 25;
+unsigned int up_migration_util_filter = 30; // 25
 
 /*
  * Enable/disable using cstate knowledge in idle sibling selection
@@ -81,7 +81,7 @@ unsigned int normalized_sysctl_sched_min_granularity	= 500000ULL;    // 750000UL
 /*
  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
  */
-static unsigned int sched_nr_latency = 6;   // 8
+static unsigned int sched_nr_latency = 5;   // 8, 6
 
 /*
  * After fork, child runs first. If set to 0 (default) then
@@ -1109,14 +1109,14 @@ update_stats_curr_start(struct cfs_rq *cfs_rq, struct sched_entity *se)
  * calculated based on the tasks virtual memory size and
  * numa_balancing_scan_size.
  */
-unsigned int sysctl_numa_balancing_scan_period_min = 1000;
-unsigned int sysctl_numa_balancing_scan_period_max = 60000;
+unsigned int sysctl_numa_balancing_scan_period_min = 600;  // 1000
+unsigned int sysctl_numa_balancing_scan_period_max = 100000; // 60000
 
 /* Portion of address space to scan in MB */
-unsigned int sysctl_numa_balancing_scan_size = 256;
+unsigned int sysctl_numa_balancing_scan_size = 256; // 256
 
 /* Scan @scan_size MB every @scan_period after an initial @scan_delay in ms */
-unsigned int sysctl_numa_balancing_scan_delay = 1000;
+unsigned int sysctl_numa_balancing_scan_delay = 1500;   // 1000
 
 struct numa_group {
 	atomic_t refcount;
