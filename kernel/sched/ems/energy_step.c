@@ -556,7 +556,7 @@ static struct esgov_policy *esgov_policy_alloc(struct cpufreq_policy *policy)
     	esg_policy->rate_delay_ns = 42/10 * NSEC_PER_MSEC;
     	}
 	if (policy->cpu == 6) {
-    	esg_policy->rate_delay_ns = 42/10 * NSEC_PER_MSEC;
+    	esg_policy->rate_delay_ns = 45/10 * NSEC_PER_MSEC;
     	}
 #else
 	esg_policy->rate_delay_ns = 4 * NSEC_PER_MSEC;
@@ -610,7 +610,7 @@ static void esgov_work(struct kthread_work *work)
 
 	down_write(&esg_policy->policy->rwsem);
 	mutex_lock(&esg_policy->work_lock);
-	__cpufreq_driver_target(esg_policy->policy, freq, CPUFREQ_RELATION_L);
+	__cpufreq_driver_target(esg_policy->policy, freq, CPUFREQ_RELATION_C);  // (L) C H
 	mutex_unlock(&esg_policy->work_lock);
 	up_write(&esg_policy->policy->rwsem);
 }
@@ -1038,7 +1038,7 @@ static void esgov_limits(struct cpufreq_policy *policy)
 	 * to ESG's target freq
 	 */
 	if (policy->cur != target_freq)
-		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);   // (L), C, H
+		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_L);   // (L), C, H
 
 	mutex_unlock(&esg_policy->work_lock);
 }

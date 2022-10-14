@@ -335,7 +335,7 @@ void init_multi_load(struct sched_entity *se)
 	memset(ml, 0, sizeof(*ml));
 }
 
-static u32 default_inherit_ratio = 25;
+static u32 default_inherit_ratio = 15; // 25
 
 void post_init_entity_multi_load(struct sched_entity *se, u64 now)
 {
@@ -1072,20 +1072,20 @@ static __read_mostly int low_patten_count = 3;          // 3
 static __read_mostly int low_patten_thres = 1024;       // 1024
 static __read_mostly int low_patten_stdev = 200;        // 200
 
-static __read_mostly u64 boost_interval = 17 * NSEC_PER_MSEC;   // 16
+static __read_mostly u64 boost_interval = 15 * NSEC_PER_MSEC;   // 16
    	}
 if (policy->cpu == 6) {
-   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_MAX;
-   	__read_mostly u64 period_size = 42/10 * NSEC_PER_MSEC;
+   	static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
+   	__read_mostly u64 period_size = 45/10 * NSEC_PER_MSEC;
 
 __read_mostly u64 period_hist_size = 10;                // 10
-static __read_mostly int high_patten_thres = 600;       // 700
+static __read_mostly int high_patten_thres = 700;       // 700
 static __read_mostly int high_patten_stdev = 200;       // 200
-static __read_mostly int low_patten_count = 3;          // 3
+static __read_mostly int low_patten_count = 5;          // 3
 static __read_mostly int low_patten_thres = 1024;       // 1024
 static __read_mostly int low_patten_stdev = 200;        // 200
 
-static __read_mostly u64 boost_interval = 18 * NSEC_PER_MSEC;   // 16
+static __read_mostly u64 boost_interval = 15 * NSEC_PER_MSEC;   // 16
    	}
 #else
 static __read_mostly unsigned int part_policy_idx = PART_POLICY_MAX_RECENT_LAST;
