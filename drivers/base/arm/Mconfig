@@ -35,7 +35,7 @@ config DMA_SHARED_BUFFER_TEST_EXPORTER
 	  Usable to help test importers.
 
 	  Modules:
-	    - dma-buf-test-exporter.ko
+	  - dma-buf-test-exporter.ko
 
 config MALI_MEMORY_GROUP_MANAGER
 	bool "Build Mali Memory Group Manager module"
@@ -47,7 +47,7 @@ config MALI_MEMORY_GROUP_MANAGER
 	  for memory pools managed by Mali GPU device drivers.
 
 	  Modules:
-	    - memory_group_manager.ko
+	  - memory_group_manager.ko
 
 config MALI_PROTECTED_MEMORY_ALLOCATOR
 	bool "Build Mali Protected Memory Allocator module"
@@ -60,5 +60,5 @@ config MALI_PROTECTED_MEMORY_ALLOCATOR
 	  of Mali GPU device drivers.
 
 	  Modules:
-	    - protected_memory_allocator.ko
+	  - protected_memory_allocator.ko
 
