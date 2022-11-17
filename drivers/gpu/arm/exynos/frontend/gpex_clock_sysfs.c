@@ -64,7 +64,7 @@ GPEX_STATIC ssize_t set_clock(const char *buf, size_t count)
 		gpex_dvfs_enable();
 	} else {
 		gpex_dvfs_disable();
-		gpex_clock_set(clk, TYPE_SYSFS, current->comm, current->pid);
+		gpex_clock_set(clk);
 	}
 
 	return count;
@@ -149,7 +149,7 @@ GPEX_STATIC ssize_t set_max_lock_dvfs(const char *buf, size_t count)
 
 	if (sysfs_streq("0", buf)) {
 		clk_info->user_max_lock_input = 0;
-		gpex_clock_lock_clock(GPU_CLOCK_MAX_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+		gpex_clock_lock_clock(GPU_CLOCK_MAX_UNLOCK, SYSFS_LOCK, 0);
 	} else {
 		ret = kstrtoint(buf, 0, &clock);
 		if (ret) {
@@ -173,9 +173,9 @@ GPEX_STATIC ssize_t set_max_lock_dvfs(const char *buf, size_t count)
 		}
 
 		if (clock == gpex_clock_get_max_clock())
-			gpex_clock_lock_clock(GPU_CLOCK_MAX_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MAX_UNLOCK, SYSFS_LOCK, 0);
 		else
-			gpex_clock_lock_clock(GPU_CLOCK_MAX_LOCK, SYSFS_LOCK, clock, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MAX_LOCK, SYSFS_LOCK, clock);
 	}
 
 	return count;
@@ -246,7 +246,7 @@ GPEX_STATIC ssize_t set_min_lock_dvfs(const char *buf, size_t count)
 
 	if (sysfs_streq("0", buf)) {
 		clk_info->user_min_lock_input = 0;
-		gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+		gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0);
 	} else {
 		ret = kstrtoint(buf, 0, &clock);
 		if (ret) {
@@ -270,9 +270,9 @@ GPEX_STATIC ssize_t set_min_lock_dvfs(const char *buf, size_t count)
 			clock = gpex_clock_get_max_clock_limit();
 
 		if (clock == gpex_clock_get_min_clock())
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0);
 		else
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock);
 	}
 
 	return count;
@@ -342,16 +342,13 @@ GPEX_STATIC ssize_t set_mm_min_lock_dvfs(const char *buf, size_t count)
 	int ret, clock = 0;
 
 	if (sysfs_streq("0", buf)) {
-		clk_info->user_min_lock_input = 0;
-		gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+		gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, MM_LOCK, 0);
 	} else {
 		ret = kstrtoint(buf, 0, &clock);
 		if (ret) {
 			GPU_LOG(MALI_EXYNOS_WARNING, "%s: invalid value\n", __func__);
 			return -ENOENT;
 		}
-
-		clk_info->user_min_lock_input = clock;
 
 		clock = gpex_get_valid_gpu_clock(clock, true);
 
@@ -369,9 +366,9 @@ GPEX_STATIC ssize_t set_mm_min_lock_dvfs(const char *buf, size_t count)
 		gpex_clboost_set_state(CLBOOST_DISABLE);
 
 		if (clock == gpex_clock_get_min_clock())
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, SYSFS_LOCK, 0, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_UNLOCK, MM_LOCK, 0);
 		else
-			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, SYSFS_LOCK, clock, current->comm, current->pid);
+			gpex_clock_lock_clock(GPU_CLOCK_MIN_LOCK, MM_LOCK, clock);
 	}
 
 	return count;
