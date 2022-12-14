@@ -1,5 +1,41 @@
 <@center><b><#selectbg_g>ThunderStormS Kernel Installer</#></b></@> 
 
+<*>ThunderStormS Kernel v3.0
+- Linux 4.19.87
+- Samsung source EGVJE Android 13
+- Some debugs off
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Fixed slow down sequential and random
+   read/write
+- Imported GPU Mali drivers r40p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25205)
+- rest like in v2.7
+</*>
+------------------------------------------------
+
+<*>ThunderStormS Kernel v2.7
+- Linux 4.19.87
+- Samsung source EFVI7 Android 12
+- Some debugs off
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Fixed slow down sequential and random
+   read/write
+- Imported GPU Mali drivers r40p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25205)
+- rest like in v2.6
+</*>
+------------------------------------------------
+
 <*>ThunderStormS Kernel v2.6
 - Linux 4.19.87
 - Samsung source EFVG5 Android 12

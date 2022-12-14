@@ -1,8 +1,4 @@
 # Copyright (C) 2012 The Android Open Source Project
-#
-# IMPORTANT: Do not create world writable files or directories.
-# This is a common source of Android security bugs.
-#
 
 on early-init
 
@@ -22,12 +18,12 @@ service kernelinit /system/etc/init/hw/kernel.sh
 
 on boot
     write /sys/bus/workqueue/devices/writeback/cpumask 1
-## Native VM bridges    
+## Native VM bridges   
     setprop ro.enable.native.bridge.exec 1
     setprop ro.enable.native.bridge.exec64 1
 ## MISC
     write /sys/module/mmc_core/parameters/use_spi_crc N
-    write /dev/sys/fs/by-name/userdata/cp_interval 300
+    write /dev/sys/fs/by-name/userdata/cp_interval 180
 ## NET
     setprop net.core.default_qdisc fq
 ## GPU rendering
@@ -55,11 +51,6 @@ on boot
     ## Fix Rendering Android 12
     setprop debug.hwui.renderer opengl
     setprop ro.hwui.use_vulkan false
-## Open Gl Speed
-    setprop pm.dexopt.first-boot speed
-    setprop pm.dexopt.install speed
-    setprop pm.dexopt.bg-dexopt speed
-    setprop pm.dexopt.boot speed
 ## Graphic properties SurfaceFlinger
     setprop persist.device_config.runtime_native.usap_pool_enabled true
     # default 3
@@ -114,7 +105,7 @@ on boot
     setprop wlan.wfd.hdcp disable
     setprop net.tethering.noprovisioning true
 ## Game tweaks
-    setprop persist.sys.NV_FPSLIMIT 160
+    setprop persist.sys.NV_FPSLIMIT 120
     setprop persist.sys.NV_POWERMODE 1
     setprop persist.sys.NV_PROFVER 15
     setprop persist.sys.NV_STEREOCTRL 0
@@ -125,7 +116,7 @@ on boot
 ## FPS Lock
     setprop ro.fps_enable 1
     setprop ro.fps.capsmin 65
-    setprop ro.fps.capsmax 160
+    setprop ro.fps.capsmax 120
     setprop debug.gr.swapinterval 0
     setprop cpu.fps 65
     setprop gpu.fps 65
@@ -210,7 +201,7 @@ on boot
     setprop ro.bluetooth.hfp.ver 1.6
     setprop persist.bt.a2dp.aptx_hd_disable false
 ## Scrolling Responsiveness
-    setprop windowsmgr.max_events_per_sec 65
+    setprop windowsmgr.max_events_per_sec 90
     setprop persist.cust.tel.eons 1
     setprop ro.min_pointer_dur 8
     setprop ro.max.fling_velocity 12000
@@ -229,10 +220,19 @@ on boot
     setprop dalvik.vm.heapstartsize 16m
     setprop dalvik.vm.heapminfree 16m
     setprop dalvik.vm.heapmaxfree 32m
-    setprop dalvik.vm.heaptargetutilization 0.50
+    setprop dalvik.vm.heaptargetutilization 0.70
     setprop dalvik.vm.dexopt-flags m=y,v=n,o=y,u=y
+    setprop ro.config.dha_tunnable=1
+    setprop ro.slmk.dha_lmk_scale=0.272
+    setprop ro.slmk.2nd.dha_lmk_scale=0.272
+    setprop ro.slmk.dha_th_rate=3.0
     setprop persist.sys.dalvik.hyperthreading true
     setprop persist.sys.dalvik.multithread true
+    setprop ro.config.pageboost.io_prefetch.enabled true
+    setprop ro.config.pageboost.io_prefetch.level 3
+    setprop iorapd.readahead.enable true
+    setprop dalvik.gc.type precise
+    setprop dalvik.vm.dex2oat-threads 8
     setprop dalvik.vm.execution-mode int:jit
     setprop dalvik.vm.verify-bytecode false
     setprop dalvik.vm.lockprof.threshold 250
@@ -243,6 +243,16 @@ on boot
     setprop dalvik.vm.dex2oat-filter speed
     setprop dalvik.vm.image-dex2oat-filter speed
     setprop dalvik.vm.appimageformat lz4
+    setprop dalvik.vm.dex2oat64.enabled true
+    setprop dalvik.vm.dex2oat-filter speed
+    setprop pm.dexopt.first-boot speed
+    setprop pm.dexopt.boot speed
+    setprop pm.dexopt.boot-after-ota speed
+    setprop pm.dexopt.post-boot extract
+    setprop pm.dexopt.install speed
+    setprop pm.dexopt.nsys-library speed
+    setprop pm.dexopt.core-app speed
+    setprop pm.dexopt.bg-dexopt speed
 ## Disable vsync for CPU rendered apps
     setprop debug.cpurend.vsync false
 ## System tweak

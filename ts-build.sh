@@ -5,7 +5,8 @@
 # XDA@nalas
 
 # Setup
-export PLATFORM_VERSION=12
+export PLATFORM_VERSION=13
+export SEC_BUILD_CONF_VENDOR_BUILD_OS=13
 export ANDROID_MAJOR_VERSION=s
 export ARCH=arm64
 export CROSS_COMPILE=$(pwd)/toolchain/gcc-cfp/gcc-cfp-jopp-only/aarch64-linux-android-4.9/bin/aarch64-linux-android-
@@ -14,12 +15,12 @@ export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=$(pwd)/toolchain/gcc-cfp/gcc-cfp-jo
 ## Clang 8.0.8
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang/host/linux-x86/clang-r349610-jopp/bin/clang
 #export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r349610-jopp/bin/clang
-## Clang 14.0.7
-export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
-export CC=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
-## Clang 14.0.0
-# export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
-# export CC=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
+## Clang 15.0.3
+#export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-15/host/linux-x86/clang-r468909b/bin/clang
+#export CC=$(pwd)/toolchain/clang-15/host/linux-x86/clang-r468909b/bin/clang
+## Clang 14.0.2
+export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
+export CC=$(pwd)/toolchain/clang-14/host/linux-x86/clang-r437112b/bin/clang
 ## Clang 12.06
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-12/host/linux-x86/clang-r416183c/bin
 #export CC=$(pwd)/toolchain/clang-12/host/linux-x86/clang-r416183c/bin
@@ -31,12 +32,12 @@ export CC=$(pwd)/toolchain/clang-1407/host/linux-x86/clang-r450784e/bin/clang
 #export CC=$(pwd)/toolchain/clang-9/bin
 #export CLANG_PREBUILT_BIN=$(pwd)/toolchain/clang-13/bin
 #export CC=$(pwd)/toolchain/clang-13/bin
-export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN:$CC
+export PATH=$CLANG_PATH:$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN:$CC
 export LLVM=1
 
-export K_VERSION="v2.6"
+export K_VERSION="v3.0"
 export K_NAME="ThundeRStormS-Kernel"
-export K_BASE="EFVG5"
+export K_BASE="GVJE"
 ANDROID=OneUI-S
 MODEL=G98XX-N986B-N985F
 # -----------------------------
@@ -64,7 +65,7 @@ DEFCONFIG7=exynos9830-c2slte_defconfig
 DEFCONFIG_TS=ts_defconfig
 DEFCONFIG_ED=ed_defconfig
 ZIP_DATE=`date +%Y%m%d`
-ZIP_NAME=$K_NAME-$MODEL-$ANDROID-$K_VERSION-CLANG1407-$ZIP_DATE.zip
+ZIP_NAME=$K_NAME-$MODEL-$ANDROID-$K_VERSION-CLANG1401-$ZIP_DATE.zip
 # -----------------------------
 
 # FUNCTIONS

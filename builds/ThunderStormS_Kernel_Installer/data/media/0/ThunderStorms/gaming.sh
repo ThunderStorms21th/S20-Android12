@@ -186,23 +186,6 @@ sleep 3
     echo "0" > /dev/cpuset/sched_load_balance   # 0
     echo "0" > /proc/sys/kernel/timer_migration # 1
     echo "0" > /proc/sys/kernel/sched_schedstats # 1
-   # Thermal Governors
-   # BIG Cluster
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone0/policy
-   # MID Cluster
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone1/policy
-   # LITTLE Cluster
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone2/policy
-   # GPU
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone3/policy
-   # ISP
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone4/policy
-   # NPU
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone5/policy
-   # AC
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone6/policy
-   # BATTERY
-   echo "step_wise" > /sys/devices/virtual/thermal/thermal_zone7/policy
     # Boeffla wakelocks
     chmod 0644 /sys/devices/virtual/misc/boeffla_wakelock_blocker/wakelock_blocker
     # umts_ipc0 - CPU max freq bug, 19050000.decon.f - bug wakeup - black screen
