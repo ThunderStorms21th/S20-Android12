@@ -2074,6 +2074,9 @@ static long kbase_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		break;
 	}
 
+	if (!mali_exynos_ioctl(kctx, cmd, arg))
+		return 0;
+
 	dev_warn(kbdev->dev, "Unknown ioctl 0x%x nr:%d", cmd, _IOC_NR(cmd));
 
 	return -ENOIOCTLCMD;
@@ -4297,6 +4300,7 @@ static int kbase_common_reg_map(struct kbase_device *kbdev)
 		err = -EINVAL;
 		goto out_ioremap;
 	}
+	mali_exynos_coherency_reg_map();
 
 	return err;
 
@@ -5448,6 +5452,7 @@ int kbase_sysfs_init(struct kbase_device *kbdev)
 		sysfs_remove_group(&kbdev->dev->kobj,
 			&kbase_attr_group);
 	}
+	mali_exynos_sysfs_set_gpu_model_callback(&gpuinfo_show);
 
 	return err;
 }
@@ -5601,6 +5606,9 @@ static int kbase_device_resume(struct device *dev)
 	if (!kbdev)
 		return -ENODEV;
 
+	/* MALI_SEC_INTEGRATION */
+	mali_exynos_set_pm_state_resume_begin();
+
 	kbase_pm_resume(kbdev);
 
 #ifdef CONFIG_MALI_MIDGARD_DVFS
@@ -5612,6 +5620,10 @@ static int kbase_device_resume(struct device *dev)
 	if (kbdev->devfreq)
 		kbase_devfreq_enqueue_work(kbdev, DEVFREQ_WORK_RESUME);
 #endif
+
+	/* MALI_SEC_INTEGRATION */
+	mali_exynos_set_pm_state_resume_end();
+
 	return 0;
 }
 
@@ -5728,7 +5740,9 @@ static int kbase_device_runtime_idle(struct device *dev)
 	 * the autosuspend delay and so won't suspend the device immediately.
 	 */
 	pm_runtime_mark_last_busy(kbdev->dev);
-	return 0;
+	/* MALI_SEC_INTEGRATION */
+	/* Runtime IDLE must be return 1 for turn on next time by RuntimePM API!! */
+	return 1;
 }
 #endif /* KBASE_PM_RUNTIME */
 
@@ -5745,11 +5759,15 @@ static const struct dev_pm_ops kbase_pm_ops = {
 };
 
 #if IS_ENABLED(CONFIG_OF)
-static const struct of_device_id kbase_dt_ids[] = { { .compatible = "arm,malit6xx" },
-						    { .compatible = "arm,mali-midgard" },
-						    { .compatible = "arm,mali-bifrost" },
-						    { .compatible = "arm,mali-valhall" },
-						    { /* sentinel */ } };
+static const struct of_device_id kbase_dt_ids[] = {
+	    /* MALI_SEC_INTEGRATION */
+	    { .compatible = "arm,mali", },
+        { .compatible = "arm,malit6xx" },
+        { .compatible = "arm,mali-midgard" },
+        { .compatible = "arm,mali-bifrost" },
+        { .compatible = "arm,mali-valhall" },
+        { /* sentinel */ }
+};
 MODULE_DEVICE_TABLE(of, kbase_dt_ids);
 #endif
 
