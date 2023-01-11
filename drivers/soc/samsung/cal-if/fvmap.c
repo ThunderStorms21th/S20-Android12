@@ -618,34 +618,6 @@ ssize_t print_fvmap(char *buf)
 	return len;
 }
 
-static void optimize_rate_volt_table(struct rate_volt_header *head, unsigned int num_of_lv) {
-	/* optimize voltages */
-	while (true) {
-		bool changed = false;
-		int i;
-
-		for (i = 1; i < num_of_lv; i++) {
-			/* switch voltages if previous frequency uses less */
-			if (head->table[i].volt > head->table[i-1].volt) {
-				unsigned int temp_volt = head->table[i-1].volt;
-
-				head->table[i-1].volt = head->table[i].volt;
-				head->table[i].volt = temp_volt;
-
-				changed = true;
-			/* set the voltage of frequency to 99.9% if matches with previous frequency */
-			} else if (head->table[i-1].volt == head->table[i].volt) {
-				head->table[i].volt = head->table[i].volt * 999 / 1000;
-
-				changed = true;
-			}
-		}
-
-		if (!changed)
-			break;
-	}
-}
-
 void update_fvmap(int id, int rate, int volt)
 {
 	struct fvmap_header *fvmap_header, *header;
@@ -690,8 +662,6 @@ void update_fvmap(int id, int rate, int volt)
 		old = _sram_base + fvmap_header[i].o_ratevolt;
 		new = _map_base + fvmap_header[i].o_ratevolt;
 	
-		optimize_rate_volt_table(old, fvmap_header[i].num_of_lv);
-
 		check_percent_margin(old, fvmap_header[i].num_of_lv);
 
 		margin = init_margin_table[vclk->margin_id];
