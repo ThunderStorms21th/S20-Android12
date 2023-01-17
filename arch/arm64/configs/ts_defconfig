@@ -24,6 +24,14 @@ CONFIG_MALI_KUTF=y
 # CONFIG_FAST_TRACK is not set
 # CONFIG_REFCOUNT_FULL is not set
 
+## STOP DEBUG
+# CONFIG_KALLSYMS_ALL is not set
+# CONFIG_DEBUG_INFO is not set
+# CONFIG_SCHED_DEBUG is not set
+# CONFIG_SCHED_STACK_END_CHECK is not set
+# CONFIG_DEBUG_PREEMPT is not set
+# CONFIG_DEBUG_LIST is not set
+
 ## Disable profiling support
 # CONFIG_PROFILING is not set
 
