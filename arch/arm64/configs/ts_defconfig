@@ -35,6 +35,10 @@ CONFIG_MALI_KUTF=y
 ## Disable profiling support
 # CONFIG_PROFILING is not set
 
+## Kernel SU
+CONFIG_KSU=y
+CONFIG_KSU_DEBUG is not set
+
 ## GPU
 # CONFIG_MALI_EXYNOS_WAKEUP_CLOCK_WA is not set
 CONFIG_MALI_DDK_VERSION=y
