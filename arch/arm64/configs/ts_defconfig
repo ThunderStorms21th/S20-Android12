@@ -24,6 +24,10 @@ CONFIG_MALI_KUTF=y
 # CONFIG_FAST_TRACK is not set
 # CONFIG_REFCOUNT_FULL is not set
 
+## KernelSU disable KPROBES
+# CONFIG_KPROBES is not set
+# CONFIG_HAVE_KPROBES is not set
+
 ## STOP DEBUG
 # CONFIG_KALLSYMS_ALL is not set
 # CONFIG_DEBUG_INFO is not set
