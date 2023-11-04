@@ -9174,7 +9174,7 @@ static bool
 ems_group_smaller_max_cpu_capacity(int level,
 		struct sched_group *sg, struct sched_group *ref)
 {
-	int extra_margin = 0;
+	int extra_margin = 54; // extra margin = 1078 - 1024, 5%
 	int src_cpu = cpumask_first(to_cpumask(sg->cpumask));
 	int dst_cpu = cpumask_first(to_cpumask(ref->cpumask));
 
