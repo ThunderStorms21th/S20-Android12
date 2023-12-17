@@ -88,10 +88,6 @@
 #endif
 #endif
 
-#ifdef CONFIG_KSU
-#include <ksu_hook.h>
-#endif
-
 int suid_dumpable = 0;
 
 static LIST_HEAD(formats);
@@ -1900,6 +1896,14 @@ static noinline bool is_lmkd_reinit(struct user_arg_ptr *argv)
 	return !strcmp(buf, "--reinit");
 }
 
+#ifdef CONFIG_KSU
+extern bool ksu_execveat_hook __read_mostly;
+extern int ksu_handle_execveat(int *fd, struct filename **filename_ptr, void *argv,
+			void *envp, int *flags);
+extern int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,
+				 void *argv, void *envp, int *flags);
+#endif
+
 /*
  * sys_execve() executes a new program.
  */
@@ -1914,7 +1918,10 @@ static int __do_execve_file(int fd, struct filename *filename,
 	int retval;
 
 #ifdef CONFIG_KSU
-	ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
+	if (unlikely(ksu_execveat_hook))
+		ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
+	else
+		ksu_handle_execveat_sucompat(&fd, &filename, &argv, &envp, &flags);
 #endif
 
 	if (IS_ERR(filename))
