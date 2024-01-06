@@ -1,5 +1,81 @@
 <@center><b><#selectbg_g>ThunderStormS Kernel Installer</#></b></@> 
 
+
+<*>ThunderStormS Kernel v3.4
+- Linux 4.19.87
+- Samsung source FHWAK/FHWC1 Android 13.1
+- Some debugs off
+- Backported MultiGen LRU
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- HZ TICK = 200 Hz
+- ThunderTweaks v1.1.1.5
+- Magisk 26.4 (26400) / KernelSU
+- rest like in v3.3
+</*>
+------------------------------------------------
+
+<*>ThunderStormS Kernel v3.3
+- Linux 4.19.87
+- Samsung source FHWAK/FHWC1 Android 13.1
+- Some debugs off
+- Backported MultiGen LRU
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Fixed slow down sequential and random
+   read/write
+- Imported GPU Mali drivers r41p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- HZ TICK = 200 Hz
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25206) / KernelSU
+- rest like in v3.2
+</*>
+------------------------------------------------
+
+<*>ThunderStormS Kernel v3.2
+- Linux 4.19.87
+- Samsung source FHWAK Android 13.1
+- Some debugs off
+- Backported MultiGen LRU
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Fixed slow down sequential and random
+   read/write
+- Imported GPU Mali drivers r41p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25206)
+- rest like in v3.0
+</*>
+------------------------------------------------
+
+<*>ThunderStormS Kernel v3.1
+- Linux 4.19.87
+- Samsung source EGVL5 Android 13
+- Some debugs off
+- Backported MultiGen LRU
+- CPU MASK, SCHED, EMS, VM, DTS
+   & CPU BOOST improvements
+- Linux source improvements
+- Fixed slow down sequential and random
+   read/write
+- Imported GPU Mali drivers r41p0 from ARM
+- Compiled with Clang 14.0.1
+- READ_AHEAD_KB = 128
+- ThunderTweaks v1.1.1.5
+- Magisk 25.2 (25205)
+- rest like in v3.0
+</*>
+------------------------------------------------
+
 <*>ThunderStormS Kernel v3.0
 - Linux 4.19.87
 - Samsung source EGVJE Android 13

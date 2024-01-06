@@ -27,11 +27,11 @@
 #
 ### ROM INFORMATION
 ini_set("rom_name",				"ThunderStormS Kernel");
-ini_set("rom_version",          "3.0");
+ini_set("rom_version",          "3.4");
 ini_set("rom_author",           "nalasTS");
 ini_set("rom_themer",           "");
 ini_set("rom_device",           "G98x/N985F/N986B");
-ini_set("rom_date",             "08/12/2022");
+ini_set("rom_date",             "13/12/2023");
 # SET THEME
 ###################################################################################################################
 theme("ts");

@@ -33,6 +33,7 @@ rm -f out/SM-986B/*.img
 rm -f out/SM-986B/*.gz
 rm -f out/SM-988B/*.img
 rm -f out/SM-988B/*.gz
+#rm -rf drivers/kernelsu
 
 # Locate placeholder in empty Ramdisk folders
 echo "" > $PWD/builds/ramdisk/ramdisk/avb/.placeholder

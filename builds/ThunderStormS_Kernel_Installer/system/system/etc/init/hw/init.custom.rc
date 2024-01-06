@@ -23,9 +23,10 @@ on boot
     setprop ro.enable.native.bridge.exec64 1
 ## MISC
     write /sys/module/mmc_core/parameters/use_spi_crc N
-    write /dev/sys/fs/by-name/userdata/cp_interval 180
+    write /dev/sys/fs/by-name/userdata/cp_interval 120
 ## NET
     setprop net.core.default_qdisc fq
+    setprop ro.telephony.iwlan_operation_mode AP-assisted
 ## GPU rendering
     setprop hw3d.force 1
     setprop hw2d.force 1
@@ -54,7 +55,7 @@ on boot
 ## Graphic properties SurfaceFlinger
     setprop persist.device_config.runtime_native.usap_pool_enabled true
     # default 3
-    setprop ro.surface_flinger.max_frame_buffer_acquired_buffers 2
+    setprop ro.surface_flinger.max_frame_buffer_acquired_buffers 3
     setprop ro.surface_flinger.running_without_sync_framework true
     setprop vendor.perf.gestureflingboost.enable 1
     setprop ro.surface_flinger.use_color_management true
@@ -91,7 +92,7 @@ on boot
     setprop af.fast_period_size 192
     setprop af.fast_track_multipler 1
 ## General Tweaks
-   setprop persist.sys.purgeable_assets 1
+    setprop persist.sys.purgeable_assets 1
     setprop ro.config.disable.hw_accel false
     setprop ro.config.iccc_version iccc_disabled
     setprop ro.fb.mode 1
@@ -178,26 +179,7 @@ on boot
     setprop ro.tether.denied false
 ## Disable Sending Usage Data
     setprop ro.config.nocheckin 1
-## Disable Strict Mode Checking
-    setprop persist.android.strictmode 0
-    setprop persist.sys.strictmode.disable 1
-    setprop persist.sys.strictmode.visual 0
-    setprop persist.sys.strictmode.disable true
 ## Bluetooth quality increase
-    setprop persist.bt.enableAptXHD true
-    setprop persist.service.btui.use_aptx 1
-    setprop persist.bluetooth.disableabsvol true
-    setprop persist.vendor.btstack.enable.splita2dp true
-    setprop persist.vendor.btstack.aac_frm_ctl.enabled true
-    setprop persist.vendor.btstack.enable.twsplus true
-    setprop persist.vendor.btstack.connect.peer_earbud true
-    setprop persist.vendor.btstack.enable.twsplussho true
-    setprop ro.bluetooth.emb_wp_mode false
-    setprop ro.bluetooth.wipower false
-    setprop ro.bluetooth.remote.autoconnect true
-    setprop ro.bluetooth.request.master true
-    setprop ro.vendor.bluetooth.wipower false
-    setprop persistent.bt.a2dp_offload_cap sbc-aptx-aptXHD
     setprop ro.bluetooth.hfp.ver 1.6
     setprop persist.bt.a2dp.aptx_hd_disable false
 ## Scrolling Responsiveness
@@ -220,7 +202,7 @@ on boot
     setprop dalvik.vm.heapstartsize 16m
     setprop dalvik.vm.heapminfree 16m
     setprop dalvik.vm.heapmaxfree 32m
-    setprop dalvik.vm.heaptargetutilization 0.70
+    setprop dalvik.vm.heaptargetutilization 0.72
     setprop dalvik.vm.dexopt-flags m=y,v=n,o=y,u=y
     setprop ro.config.dha_tunnable=1
     setprop ro.slmk.dha_lmk_scale=0.272
@@ -232,7 +214,6 @@ on boot
     setprop ro.config.pageboost.io_prefetch.level 3
     setprop iorapd.readahead.enable true
     setprop dalvik.gc.type precise
-    setprop dalvik.vm.dex2oat-threads 8
     setprop dalvik.vm.execution-mode int:jit
     setprop dalvik.vm.verify-bytecode false
     setprop dalvik.vm.lockprof.threshold 250
@@ -240,11 +221,7 @@ on boot
     setprop dalvik.vm.jmiopts forcecopy
     setprop dalvik.vm.stack-trace-file /data/anr/traces.txt
     setprop dalvik.vm.check-dex-sum false
-    setprop dalvik.vm.dex2oat-filter speed
-    setprop dalvik.vm.image-dex2oat-filter speed
     setprop dalvik.vm.appimageformat lz4
-    setprop dalvik.vm.dex2oat64.enabled true
-    setprop dalvik.vm.dex2oat-filter speed
     setprop pm.dexopt.first-boot speed
     setprop pm.dexopt.boot speed
     setprop pm.dexopt.boot-after-ota speed
@@ -257,14 +234,11 @@ on boot
     setprop debug.cpurend.vsync false
 ## System tweak
     setprop ro.config.hw.logsystem.send 0
+## SQL Tweaks
+    #setprop debug.sqlite.journalmode WAL
+    setprop debug.sqlite.syncmode 1
 ## Signal Boost
     setprop bt.max.hfpclient.connections 1
-## SQL Tweaks
-    setprop debug.sqlite.journalmode WAL
-    setprop debug.sqlite.syncmode 1
-## ART compilation
-    setprop vm.scan_unevictable_pages 0
-    setprop dalvik.vm.check-dex-sum false
 ## RmNet Data
     setprop persist.rmnet.data.enable true
     setprop persist.data.wda.enable true
@@ -294,6 +268,3 @@ on boot
 ## MEDIA tweaks
     setprop mm.enable.smoothstreaming true
     setprop ro.media.recorder-max-base-layer-fps 65
-
-on property:sys.boot_completed=1
-      resetprop ro.build.selinux 1
