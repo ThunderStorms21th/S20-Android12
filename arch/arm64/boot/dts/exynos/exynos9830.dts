@@ -6944,7 +6944,7 @@
 
 	coresight@1e000000 {
 		compatible = "exynos,coresight";
-		// status = "disabled";
+		status = "disabled";
 		base = <0x1e000000>;
 		sj-offset = <0x6000>;
 		funnel-num = <0x03>;
@@ -11428,12 +11428,12 @@
 
 			coregroup1 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x68>;  // 0x64
+				active-ratio = <0x64>;  // 0x64
 			};
 
 			coregroup2 {
 				coverage-ratio = <0x1e>;
-				active-ratio = <0x68>;  // 0x64
+				active-ratio = <0x64>;  // 0x64
 			};
 		};
 
@@ -11446,12 +11446,12 @@
 
 			coregroup1 {
 				active-ratio-limit = <0x30>;    // 0x30
-				active-ratio-boost = <0x1a>;    // 0x30
+				active-ratio-boost = <0x0a>;    // 0x30 0x1a
 			};
 
 			coregroup2 {
 				active-ratio-limit = <0x1e>;
-				active-ratio-boost = <0x02>;    // 0x00
+				active-ratio-boost = <0x00>;    // 0x00 0x02
 			};
 		};
 
@@ -13893,7 +13893,7 @@
                           0x5c0a8 0x4e 0x5a 0x01 0x14a140 0x00 0x00 0x00
                           0x3f7a0 0x4e 0x5d 0x01 0x14a140 0x00 0x00 0x00
                           0x26160 0x00 0x5d 0x01 0xce4c8 0x00 0x00 0x00>;
-		gpu_cl_pmqos_table_size = <0x08 0x05>;
+		gpu_cl_pmqos_table_size = <0x09 0x05>;
 		gpu_cl_pmqos_table = </* freq mif      lit      mid      big */
                               0xdafe8 0x1ef1e0 0x1e8c50 0x1e8c50 0x1e8c50
                               0xcb200 0x1ef1e0 0x1e8c50 0x1e8c50 0x1e8c50
@@ -13908,8 +13908,8 @@
 		gpu_pmqos_cpu_cluster_num = <0x03>;
 		gpu_pmu_status_reg_offset = <0x2204>;
 		gpu_pmu_status_local_pwr_mask = <0x01>;
-		gpu_max_clock = <0xdafe8>;          // 0xc3500
-		gpu_max_clock_limit = <0xdafe8>;    // 0xc3500
+		gpu_max_clock = <0xdafe8>;          // 0xc3500 0xdafe8
+		gpu_max_clock_limit = <0xdafe8>;    // 0xc3500 0xdafe8
 		gpu_min_clock = <0x26160>;
 		gpu_dvfs_start_clock = <0x3f7a0>;
 		gpu_dvfs_bl_config_clock = <0x26160>;
@@ -13920,27 +13920,27 @@
 		gpu_temp_throttling_level_num = <0x06>;
 		gpu_temp_throttling = <0xcb200 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0>;    // 0xc3500 0xab630 0x8ba60 0x6f158 0x5c0a8 0x3f7a0 
 		gpu_power_coeff = <0x271>;
-		gpu_dvfs_time_interval = <0x01>;    // 1 tick : 10ms | default 5 tick : 50ms
+		gpu_dvfs_time_interval = <0x06>;    // 1 tick : 10ms | default 5 tick : 50ms
 		gpu_default_wakeup_lock = <0x01>;
 		gpu_dynamic_abb = <0x00>;
 		gpu_early_clk_gating = <0x00>;
 		gpu_dvs = <0x00>;
 		gpu_inter_frame_pm = <0x01>;
 		gpu_inter_frame_dynamic_util = <0x32>;
-		gpu_inter_frame_dynamic_freq = <0xdafe8>;   // 0xab630
+		gpu_inter_frame_dynamic_freq = <0xdafe8>;   // 0xab630 0xdafe8
 		gpu_perf_gathering = <0x00>;
 		gpu_runtime_pm_delay_time = <0x32>;
 		gpu_dvfs_polling_time = <0x1e>;
 		gpu_pmqos_int_disable = <0x01>;
-		gpu_pmqos_compute_mif_max_clock = <0x29a810>;   // 0x26ae58
+		gpu_pmqos_compute_mif_max_clock = <0x26ae58>;   // 0x26ae58 | 0x29a810
 		gpu_pmqos_mif_max_clock = <0x29a810>;           // 0x29a810
 		gpu_pmqos_mif_max_clock_base = <0x9eb10>;
 		gpu_pmqos_g3d_clock = <0xc3500 0xab630>;
-		gpu_pmqos_cl2_max_clock = <0x1e8c50 0x21b8d0>;  // 0x1506d0 0x19c990
+		gpu_pmqos_cl2_max_clock = <0x19c990 0x1e8c50>;  // 0x1506d0 0x19c990 | 0x1e8c50 0x21b8d0
 		gpu_pmqos_cl1_max_clock = <0x1e8c50 0x00>;      // 0x19c990 0x00
 		gpu_cl_dvfs_start_base = <0x5c0a8>;
 		gpu_debug_level = <0x04>;   // 0x03 : DEBUG(1) INFO(2) WARNING(3) ERROR(4)
-		gpu_trace_level = <0x02>;   // 0x08
+		gpu_trace_level = <0x02>;   // 0x08 0x02
 		gpu_mo_min_clock = <0x5c0a8>;
 		gpu_boost_gpu_min_lock = <0x00>;
 		gpu_boost_egl_min_lock = <0x1c9080>;
@@ -14447,7 +14447,7 @@
 			shared-cpus = "0-3";
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
-			step = <0x0a>;  // 0x0a
+			step = <0x0f>;  // 0x0a
 			patient_mode = <0x00>;
 		};
 
@@ -14456,7 +14456,7 @@
 			shared-cpus = "4-5";
 			pm_qos-min-class = <0x05>;
 			pm_qos-max-class = <0x06>;
-			step = <0x1a>;  // 0x08 1a
+			step = <0x08>;  // 0x08 1a 16
 			patient_mode = <0x00>;
 		};
 
@@ -14465,7 +14465,7 @@
 			shared-cpus = "6-7";
 			pm_qos-min-class = <0x07>;
 			pm_qos-max-class = <0x08>;
-			step = <0x1a>;  // 0x0a 1a
+			step = <0x08>;  // 0x0a 1a 16
 			patient_mode = <0x00>;
 		};
 	};
@@ -14501,7 +14501,7 @@
 			min-freq = <0x6be90>;
 			pm_qos-min-class = <0x03>;
 			pm_qos-max-class = <0x04>;
-			user-default-qos = <0x13d620>;  // 0x101148
+			user-default-qos = <0x101148>;  // 0x101148
 			user-boost = <0x00>;
 			#cooling-cells = <0x02>;
 			phandle = <0x143>;
@@ -14530,7 +14530,7 @@
 			min-freq = <0x5c0a8>;
 			pm_qos-min-class = <0x05>;
 			pm_qos-max-class = <0x06>;
-			user-default-qos = <0x12a570>;  // 0x104410
+			user-default-qos = <0x104410>;  // 0x104410
 			user-boost = <0x01>;
 			#cooling-cells = <0x02>;
 			phandle = <0x144>;
@@ -14569,7 +14569,7 @@
 			pm_qos-min-class = <0x07>;
 			pm_qos-max-class = <0x08>;
 			pm_qos-booting = <0x267b90>;    // 0x21b8d0
-			user-default-qos = <0x137090>;  // 0x104410
+			user-default-qos = <0x104410>;  // 0x104410
 			user-boost = <0x02>;
 			#cooling-cells = <0x02>;
 			phandle = <0x145>;
@@ -14619,7 +14619,7 @@
 		interrupts = <0x00 0xb3 0x04>;
 		sibling-cpus = "6-7";
 		down-step = <0x01>;
-		max-freq-wo-ocp = <0x1e8c50>;
+		max-freq-wo-ocp = <0x24e550>; // 0x1e8c50
 		release-mode = <0x01>;
 		release-threshold = <0x32>;
 		release-duration = <0x0f>;
@@ -14737,7 +14737,7 @@
 			stall-pct-thr = <0x00>;
 			pm-qos-min-class = <0x05>;
 			pm-qos-max-class = <0x06>;
-			pm-qos-max-freq = <0x21b8d0>;
+			pm-qos-max-freq = <0x249f00>; // 0x21b8d0
 		};
 
 		cl2 {
@@ -14749,7 +14749,7 @@
 			stall-pct-thr = <0x00>;
 			pm-qos-min-class = <0x07>;
 			pm-qos-max-class = <0x08>;
-			pm-qos-max-freq = <0x1cf610>;
+			pm-qos-max-freq = <0x21b8d0>; // 0x1cf610
 		};
 
 		gpu {
@@ -15588,7 +15588,7 @@
 
 			dvfs_gpu {
 				dm-index = <0x0d>;
-				available = "true";    // false
+				available = "false";    // false true
 				cal_id = <0xb04000a>;
 				dm_type_name = "dm_gpu";
 			};
@@ -15892,10 +15892,10 @@
 		tmu_name = "BIG";
 		id = <0x00>;
 		sensors = <0x3e>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		hotplug_enable = <0x01>;    // 0x01
-		hotplug_in_threshold = <0x6b>;  // 0x5b | 0x7a
-		hotplug_out_threshold = <0x70>; // 0x60 | 0x8a
+		hotplug_in_threshold = <0x5b>;  // 0x5b | 0x7a
+		hotplug_out_threshold = <0x60>; // 0x60 | 0x8a
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x172>;
 	};
@@ -15907,7 +15907,7 @@
 		tmu_name = "MID";
 		id = <0x01>;
 		sensors = <0x80>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x174>;
 	};
@@ -15919,7 +15919,7 @@
 		tmu_name = "LITTLE";
 		id = <0x02>;
 		sensors = <0x100>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x176>;
 	};
@@ -15931,7 +15931,7 @@
 		tmu_name = "G3D";
 		id = <0x03>;
 		sensors = <0x3d>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x17f>;
 	};
@@ -15943,7 +15943,7 @@
 		tmu_name = "ISP";
 		id = <0x04>;
 		sensors = <0x100>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x181>;
 	};
@@ -15955,7 +15955,7 @@
 		tmu_name = "NPU";
 		id = <0x05>;
 		sensors = <0xc0>;
-		sensing_mode = "max";   // <balance>, min, max
+		sensing_mode = "balance";   // <balance>, min, max
 		#thermal-sensor-cells = <0x00>;
 		phandle = <0x18b>;
 	};
@@ -15973,11 +15973,11 @@
 
 		BIG {
 			zone_name = "BIG_THERMAL";
-			polling-delay-passive = <0x42>; // 0x32
+			polling-delay-passive = <0x32>; // 0x32 0x42
 			polling-delay = <0x3e8>;
 			thermal-sensors = <0x172>;
 			governor = "power_allocator";
-			sustainable-power = <0x01>; // 0x00
+			sustainable-power = <0x01>; // 0x00 0x01
 			k_po = <0x00>;
 			k_pu = <0x00>;
 			k_i = <0x00>;
@@ -16055,7 +16055,7 @@
 
 		MID {
 			zone_name = "MID_THERMAL";
-			polling-delay-passive = <0x42>; // 0x32
+			polling-delay-passive = <0x32>; // 0x32 0x42
 			polling-delay = <0x3e8>;
 			thermal-sensors = <0x174>;
 			governor = "power_allocator";
@@ -16247,7 +16247,7 @@
 
 		G3D {
 			zone_name = "G3D_THERMAL";
-			polling-delay-passive = <0x74>; // 0x64
+			polling-delay-passive = <0x64>; // 0x64 0x74
 			polling-delay = <0x00>;
 			thermal-sensors = <0x17f>;
 			governor = "power_allocator";
