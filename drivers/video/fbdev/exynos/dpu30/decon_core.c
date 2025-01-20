@@ -5305,7 +5305,7 @@ static int decon_create_update_thread(struct decon_device *decon, char *name)
 	}
 #endif
 
-	param.sched_priority = 22;  // 20
+	param.sched_priority = 30;  // 20
 	sched_setscheduler_nocheck(decon->up.thread, SCHED_FIFO, &param);
 	kthread_init_work(&decon->up.work, decon_update_regs_handler);
 
